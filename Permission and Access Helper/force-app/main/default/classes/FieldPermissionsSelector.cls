@@ -13,20 +13,22 @@ public class FieldPermissionsSelector extends fflib_SObjectSelector implements I
     public Schema.SObjectType getSObjectType() {
         return FieldPermissions.getSObjectType();
     }
-
     public static IFieldPermissionSelector newInstance()
     {
         return (IFieldPermissionSelector) PermissionApplication.Selector.newInstance(FieldPermissions.getSObjectType());
     }
-    public static List<FieldPermissions> getFieldPermissions(Id PermissionSetId, String ObjName){
-        return[SELECT Id, 
-               ParentId, 
-               SobjectType,
-               Field,
-               PermissionsEdit,
-               PermissionsRead
-               FROM FieldPermissions 
-               WHERE ParentId=:PermissionSetId
-              AND SobjectType=:ObjName];
+    public List<FieldPermissions> getFieldPermissionsByPermissionSet(Id PermissionSetId, String ObjName){
+        return (List<FieldPermissions>) Database.query(
+         newQueryFactory()
+        .setCondition('ParentId =:PermissionSetId AND SobjectType=:ObjName')
+        .toSOQL());
+    }
+    
+    public List<FieldPermissions> getFieldPermissionsByProfile(Id ProfileId, String ObjName){
+       return (List<FieldPermissions>) Database.query(
+         newQueryFactory()
+        .setCondition('Parent.ProfileId =:ProfileId AND SObjectType=: ObjName')
+        .toSOQL());
     }
 }
+
