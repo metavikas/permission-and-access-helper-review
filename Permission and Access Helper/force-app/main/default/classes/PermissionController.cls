@@ -26,7 +26,7 @@ public class PermissionController {
     }
     
     @AuraEnabled(cacheable=true)
-    public static List<PermissionDataWrapper>getFieldPermissionsByProfile(Id profileId, String objName){
+    public static List<PermissionDataWrapper> getFieldPermissionsByProfile(Id profileId, String objName){
         return PermissionService.getFieldPermissionsByProfile( profileId, objName);
     }
     

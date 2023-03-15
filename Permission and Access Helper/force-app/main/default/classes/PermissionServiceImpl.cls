@@ -20,6 +20,9 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
     }
     
     private List<PermissionDataWrapper> convertObjectPermissionsToWrapper(List<ObjectPermissions> objectPermissions){
+        if(objectPermissions.size() == 0){
+            return null;
+        }
         List<PermissionDataWrapper> wrappedData = new List<PermissionDataWrapper>();
         Map<String, SObjectType> objectMap = Schema.getGlobalDescribe();
         for(ObjectPermissions obj : objectPermissions){
@@ -30,8 +33,15 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
             permissions.put('Delete', obj.PermissionsDelete);
             permissions.put('ViewAllRecords', obj.PermissionsViewAllRecords);
             permissions.put('ModifyAllRecords', obj.PermissionsModifyAllRecords);
+            String label = '';
             SObjectType objectInUse = objectMap.get(obj.SobjectType);
-            wrappedData.add(new PermissionDataWrapper(objectInUse.getDescribe().getLabel(),
+            if(objectInUse == null){
+                label = obj.SobjectType;
+                System.debug('Null occured ' + label);
+            }else{
+                label = objectInUse.getDescribe().getLabel();
+            }
+            wrappedData.add(new PermissionDataWrapper(label,
                                                         obj.SobjectType,
                                                         obj.Id,
                                                         permissions));
@@ -39,20 +49,25 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         return wrappedData;
     } 
     private List<PermissionDataWrapper> convertFieldPermissionsToWrapper(List<FieldPermissions> fieldPermissions){
+        if(fieldPermissions.size() == 0){
+            return null;
+        }
         List<PermissionDataWrapper> wrappedData = new List<PermissionDataWrapper>();
         String objectName = fieldPermissions[0].SobjectType;
-        Map<String, Schema.SObjectField> fieldMap =  Schema.describeSObjects(
-                    new List<String>{ objectName },
-                    SObjectDescribeOptions.DEFERRED
-                )[0].fields.getMap();
-        for(FieldPermissions field : fieldPermissions){
+        List<Schema.DescribeSObjectResult> describeData = Schema.describeSObjects(
+            new List<String>{ objectName },
+            SObjectDescribeOptions.DEFERRED
+        );
+        Map<String, Schema.SObjectField> fieldMap =  describeData[0].fields.getMap();
+        for(FieldPermissions fpData : fieldPermissions){
             Map<String, Boolean> permissions = new Map<String,Boolean>();
-            permissions.put('Edit', field.PermissionsEdit);
-            permissions.put('Read', field.PermissionsRead);
-            Schema.DescribeFieldResult fieldResult = fieldMap.get(field.Field).getDescribe();
+            permissions.put('Edit', fpData.PermissionsEdit);
+            permissions.put('Read', fpData.PermissionsRead);
+            String fieldName = fpData.Field.split('\\.')[1];
+            Schema.DescribeFieldResult fieldResult = fieldMap.get(fieldName).getDescribe();
             wrappedData.add(new PermissionDataWrapper(fieldResult.getLabel(),
-                                                        field.Field,
-                                                        field.Id,
+                                                        fieldName,
+                                                        fpData.Id,
                                                         permissions));
         }
         return wrappedData;
