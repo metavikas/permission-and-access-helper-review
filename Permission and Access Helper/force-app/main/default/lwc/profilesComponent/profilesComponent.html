@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="Profile Settings">
+        <div class="slds-var-m-left_small">
+            <lightning-combobox class="slds-size_1-of-4" name="Profiles" label="Available Profiles"
+                placeholder="Select a Profile" options={profiles} value={selectedProfileId}
+                onchange={handleProfileChange}>
+            </lightning-combobox>
+            <template if:true={showObjectPermissionTable}>
+                <div class="slds-var-m-around_small">
+                    <lightning-card title="Object Permissions">
+                        <div style="height: 300px">
+                            <c-table-for-data render-data={objectPermissionData}></c-table-for-data>
+                        </div>
+                    </lightning-card>
+                </div>
+            </template>
+        </div>
+        <template if:true={errors}>
+            <p>Errors Exist</p>
+        </template>
+    </lightning-card>
+</template>
