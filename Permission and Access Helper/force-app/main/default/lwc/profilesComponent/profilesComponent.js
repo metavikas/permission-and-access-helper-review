@@ -8,7 +8,6 @@ export default class ProfilesComponent extends LightningElement {
     selectedProfileId = '';
     showObjectPermissionTable = false;
     @track objectPermissionData = [];
-    @track errors;
     
     @wire(getProfile) 
     obtainedProfiles({data,error}){
@@ -27,13 +26,14 @@ export default class ProfilesComponent extends LightningElement {
         console.log("Selcted profile is " + JSON.stringify(this.selectedProfileId));
         getObjectPermissionsByProfile({ profileId : this.selectedProfileId})
             .then((result) => {
+                this.showObjectPermissionTable = true;
+                this.showErrors = false;
                 this.objectPermissionData = result;
-                this.objectPermissionData = [...this.objectPermissionData]
-                console.log("Data in var is " + JSON.stringify(this.objectPermissionData.slice(0, 5)));
             })
             .catch((error) => {
-                console.log("Errors encountered")
-                this.errors = error;
+                this.showObjectPermissionTable = false;
+                this.showErrors = true;
+                console.log("Errors encountered " + error);
             });
     }
 

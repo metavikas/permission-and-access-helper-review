@@ -1,9 +1,9 @@
 <template>
-    <lightning-card title="Profile Settings">
+    <lightning-card title="Permission Set Settings">
         <div class="slds-var-m-left_small">
-            <lightning-combobox class="slds-size_1-of-4" name="Profiles" label="Available Profiles"
-                placeholder="Select a Profile" options={profiles} value={selectedProfileId}
-                onchange={handleProfileChange}>
+            <lightning-combobox class="slds-size_1-of-4" name="Permission Sets" label="Available Permission Sets"
+                placeholder="Select a Permission Set" options={permissionSets} value={selectedPermissionSetId}
+                onchange={handlePermissionSetChange}>
             </lightning-combobox>
             <template if:true={showObjectPermissionTable}>
                 <div class="slds-var-m-around_small slds-size_1-of-2">
@@ -15,7 +15,7 @@
                 </div>
             </template>
         </div>
-        <template if:true={errors}>
+        <template if:true={showErrors}>
             <p>Errors Exist</p>
         </template>
     </lightning-card>

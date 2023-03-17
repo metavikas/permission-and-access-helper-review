@@ -20,8 +20,8 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
     }
     
     private List<PermissionDataWrapper> convertObjectPermissionsToWrapper(List<ObjectPermissions> objectPermissions){
-        if(objectPermissions.size() == 0){
-            return null;
+        if(objectPermissions.isEmpty()){
+            return new List<PermissionDataWrapper>();
         }
         List<PermissionDataWrapper> wrappedData = new List<PermissionDataWrapper>();
         Map<String, SObjectType> objectMap = Schema.getGlobalDescribe();
@@ -49,8 +49,8 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         return wrappedData;
     } 
     private List<PermissionDataWrapper> convertFieldPermissionsToWrapper(List<FieldPermissions> fieldPermissions){
-        if(fieldPermissions.size() == 0){
-            return null;
+        if(fieldPermissions.isEmpty()){
+            return new List<PermissionDataWrapper>();
         }
         List<PermissionDataWrapper> wrappedData = new List<PermissionDataWrapper>();
         String objectName = fieldPermissions[0].SobjectType;
