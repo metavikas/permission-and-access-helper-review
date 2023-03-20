@@ -8,7 +8,6 @@ export default class ProfilesComponent extends LightningElement {
     selectedProfileId = '';
     showObjectPermissionTable = false;
     @track objectPermissionData = [];
-    
     @wire(getProfile) 
     obtainedProfiles({data,error}){
         if(error){
