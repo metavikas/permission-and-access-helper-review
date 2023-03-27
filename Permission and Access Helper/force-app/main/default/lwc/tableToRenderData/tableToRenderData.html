@@ -1,0 +1,30 @@
+<template>
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Permission Type</th>
+                <th>Value</th>
+                <th>Access</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={data} for:item="item">
+                <template for:each={item.permissionSetProfileData} for:item="profilePermissionData">
+                    <template for:each={profilePermissionData.permissionTypeData} for:item="permissionTypeData">
+                        <template for:each={permissionTypeData.permissions} for:item="permission">
+                            <tr key={permission.value}>
+                                <td if:true={changedItem} rowspan={profilePermissionData.rowspan}>{item.type}</td>
+                                <td rowspan={permissionData.permissions.length}>{profileData.name}</td>
+                                <td rowspan={permissionData.permissions.length}>{permissionData.permissionType}</td>
+                                <td>{permission.value}</td>
+                                <td>{permission.access}</td>
+                            </tr>
+                        </template>
+                    </template>
+                </template>
+            </template>
+        </tbody>
+    </table>
+</template>

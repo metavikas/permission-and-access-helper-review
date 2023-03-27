@@ -1,18 +1,46 @@
 public with sharing class PermissionDataWrapper {
+
+    @AuraEnabled
+    public String type;
+    @AuraEnabled
+    public List<PermissionSetProfileData> permissionSetProfileData;
+    @AuraEnabled
+    public Integer rowspan;
     
-    @AuraEnabled
-    public String label;
-    @AuraEnabled
-    public String apiName;
-    @AuraEnabled
-    public String Id;
-    @AuraEnabled
-    public Map<String, Boolean> permissions;
-    
-    public PermissionDataWrapper(String label, String apiName, String Id, Map<String, Boolean> permissions) {
-        this.label = label;
-        this.apiName = apiName;
-        this.Id = Id;
-        this.permissions = permissions;
+
+    public class PermissionSetProfileData{
+        @AuraEnabled
+        public String name;
+        @AuraEnabled
+        public List<PermissionTypeData> permissionTypeData;
+        @AuraEnabled
+        public Integer rowspan;
+    }
+
+    public class PermissionTypeData{
+        @AuraEnabled
+        public String permissionType;
+        @AuraEnabled
+        public List<Permission> permissions;
+        @AuraEnabled
+        public Integer rowspan;
+        
+        public PermissionTypeData(String permissionType, List<Permission> permissions, Integer rowspan){
+            this.permissionType = permissionType;
+            this.permissions = permissions;
+            this.rowspan = rowspan;
+        }
+    }
+
+    public class Permission{
+        @AuraEnabled
+        public String value;
+        @AuraEnabled
+        public String access;
+
+        public Permission(String value, String access){
+            this.value = value;
+            this.access = access;
+        }
     }
 }

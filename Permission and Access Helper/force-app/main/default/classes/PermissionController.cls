@@ -11,24 +11,8 @@ public class PermissionController {
     }
     
     @AuraEnabled(cacheable=true)
-    public static List<PermissionDataWrapper> getObjectPermissionsByProfile(Id profileId){
-        return PermissionService.getObjectPermissionsByProfile(profileId);
+    public static List<PermissionDataWrapper> getAllPermissionData(){
+        return PermissionService.getAllPermissionData();
     }
-    
-    @AuraEnabled(cacheable=true)
-    public static List<PermissionDataWrapper> getObjectPermissionsByPermissionSet(Id permissionSetId){
-        return PermissionService.getObjectPermissionsByPermissionSet(permissionSetId);
-    }
-    
-    @AuraEnabled(cacheable=true)
-    public static List<PermissionDataWrapper> getFieldPermissionsByPermissionSet(Id permissionSetId, String objName){
-        return PermissionService.getFieldPermissionsByPermissionSet( permissionSetId, objName);
-    }
-    
-    @AuraEnabled(cacheable=true)
-    public static List<PermissionDataWrapper> getFieldPermissionsByProfile(Id profileId, String objName){
-        return PermissionService.getFieldPermissionsByProfile( profileId, objName);
-    }
-    
     
 }
