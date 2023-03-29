@@ -25,51 +25,50 @@ connectedCallback(){
 
 convertData(convArray){
     const alldata=convArray;
-//console.log("this is all"+JSON.stringify(alldata));
+
 alldata.forEach(permEle=>{
-    // profile
+   
 const permissionSetProfileData=permEle.permissionSetProfileData;
 let permRowSpanValue=0;
 permissionSetProfileData.forEach(permDataEle=>{
-    //Name
-    //console.log("this is permDataEle"+JSON.stringify(permDataEle));
+   
     const permTypeData= permDataEle.permissionTypeData;
     let nameRowspanvalue=0;
     permTypeData.forEach(objfieldPermEle=>{
-        //console.log("this is length"+objfieldPermEle.permissions.length);
+       
         objfieldPermEle.rowspan=objfieldPermEle.permissions.length+1;
         nameRowspanvalue+=objfieldPermEle.rowspan;
     });
-    //console.log("RowSpan for Name"+value);
+   
     permDataEle.rowspan=nameRowspanvalue+1;
     permRowSpanValue+=permDataEle.rowspan;
 });
-//console.log(permRowSpanValue);
+
 permEle.rowspan=permRowSpanValue+1;
 });
  console.log(alldata);
  return alldata;
 }
 
-// filterPermissionSetAndProfile(type,nameField){
-//     let filterProfileData=this.reqData;
-//     let result= filterProfileData.filter((item)=>{
-//         if(item.type===type){
-//             return item;
-//         }
-//     });
-//     result.forEach(typeEle=>{
-//         let permNameArray=typeEle.permissionSetProfileData;
-//         permNameArray=permNameArray.filter(item=>{
-//             if(item.name===nameField){
-//                 return item;
-//             }
-//         });
-//         typeEle.permissionSetProfileData=[...permNameArray];
-//     });
+filterPermissionSetAndProfile(type,nameField){
+    let filterProfileData=this.reqData;
+    let result= filterProfileData.filter((item)=>{
+        if(item.type===type){
+            return item;
+        }
+    });
+    result.forEach(typeEle=>{
+        let permNameArray=typeEle.permissionSetProfileData;
+        permNameArray=permNameArray.filter(item=>{
+            if(item.name===nameField){
+                return item;
+            }
+        });
+        typeEle.permissionSetProfileData=[...permNameArray];
+    });
 
-//     return result;
-// }
+    return result;
+}
 
 filterObjects(objName){
     let filterObjArray=this.reqData;
@@ -77,12 +76,6 @@ filterObjects(objName){
         let permissionSetProfileData=permEle.permissionSetProfileData;
         permissionSetProfileData.forEach(permNameEle=>{
             let permissionTypeData= permNameEle.permissionTypeData;
-            // permissionTypeData= permissionTypeData.filter(item=>{
-            //     if(item.permissionType==='Object Permissions'){
-            //         return item;
-            //     }
-            // });
-            // permNameEle.permissionTypeData=[...permissionTypeData];
             permissionTypeData.forEach(permtypeEle=>{
                 let permissions= permtypeEle.permissions;
                 permissions=permissions.filter(item=>{
@@ -109,35 +102,35 @@ filterObjects(objName){
     return filterObjArray;
 }
 
-// filterFields(objName,fieldName){
-//     let filterFieldsArray=this.reqData;
-//     let searchField=objName+'.'+fieldName;
-//     filterFieldsArray.forEach(permEle=>{
-//         let permissionSetProfileData=permEle.permissionSetProfileData;
-//         permissionSetProfileData.forEach(permNameEle=>{
-//             let permissionTypeData =permNameEle.permissionTypeData;
-//             permissionTypeData.forEach(permTypeEle=>{
-//                 let permissions=permTypeEle.permissions;
-//                 permTypeEle.permissions=permissions.filter(item=>{
-//                     if(item.value===searchField){
-//                         return item;
-//                     }
-//                 });
-//             });
-//             permissionTypeData= permissionTypeData.filter(item=>{
-//                 if(item.permissions.length>0){
-//                     return item;
-//                 }
-//             });
-//             permNameEle.permissionTypeData=[... permissionTypeData];
-//         });
-//         permEle.permissionSetProfileData=permissionSetProfileData.filter(item=>{
-//             if(item.permissionTypeData.length>0){
-//                 return item;
-//             }
+filterFields(objName,fieldName){
+    let filterFieldsArray=this.reqData;
+    let searchField=objName+'.'+fieldName;
+    filterFieldsArray.forEach(permEle=>{
+        let permissionSetProfileData=permEle.permissionSetProfileData;
+        permissionSetProfileData.forEach(permNameEle=>{
+            let permissionTypeData =permNameEle.permissionTypeData;
+            permissionTypeData.forEach(permTypeEle=>{
+                let permissions=permTypeEle.permissions;
+                permTypeEle.permissions=permissions.filter(item=>{
+                    if(item.value===searchField){
+                        return item;
+                    }
+                });
+            });
+            permissionTypeData= permissionTypeData.filter(item=>{
+                if(item.permissions.length>0){
+                    return item;
+                }
+            });
+            permNameEle.permissionTypeData=[... permissionTypeData];
+        });
+        permEle.permissionSetProfileData=permissionSetProfileData.filter(item=>{
+            if(item.permissionTypeData.length>0){
+                return item;
+            }
             
-//         });
-//     });
-//     return filterFieldsArray;
-// }
+        });
+    });
+    return filterFieldsArray;
+}
 }

@@ -1,0 +1,11 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template if:true={showNoDataImage}>
+        <P>No data Available</P>
+    </template>
+    <template if:false={showNoDataImage}>
+        <lightning-datatable key-field="id" data={renderData} columns={columns} column-widths-mode="auto"
+            show-row-number-column max-row-selection="1" resize-column-disabled onrowselection={sendSelectedRowData}
+            hide-checkbox-column={hideCheckboxColumn}></lightning-datatable>
+    </template>
+</template>

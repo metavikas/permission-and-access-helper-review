@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title="Permission Set Settings">
+        <div class="slds-var-m-left_small">
+            <lightning-combobox class="slds-size_1-of-4" name="Permission Sets" label="Available Permission Sets"
+                placeholder="Select a Permission Set" options={permissionSets} value={selectedPermissionSetId}
+                onchange={handlePermissionSetChange}>
+            </lightning-combobox>
+            <template if:true={showPermissionData}>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-card title="Object Permissions">
+                            <div style="height: 300px">
+                                <lightning-spinner if:true={isLoadingObjects}></lightning-spinner>
+                                <c-table-for-data if:false={isLoadingObjects} columns={ojbectDataColumns}
+                                    render-data={objectPermissionData} onrowselected={objectSelected}>
+                                </c-table-for-data>
+                            </div>
+                        </lightning-card>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3" if:true={showFieldPermissionTable}>
+                        <lightning-card title="Field Permissions">
+                            <div style="height: 300px">
+                                <lightning-spinner if:true={isLoadingFields}></lightning-spinner>
+                                <c-table-for-data if:false={isLoadingFields} columns={fieldDataColumns}
+                                    render-data={fieldPermissionData} hide-checkbox-column>
+                                </c-table-for-data>
+                            </div>
+                        </lightning-card>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <template if:true={showErrors}>
+            <p>Errors Exist</p>
+        </template>
+    </lightning-card>
+</template>
