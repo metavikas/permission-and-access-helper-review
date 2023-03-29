@@ -1,0 +1,128 @@
+<template>
+
+<table class="slds-table slds-table_cell-buffer slds-table_bordered ">
+    <thead>
+        <tr class="slds-line-height_reset">
+        <th class="" scope="col">
+        <div class="slds-truncate" title="">Type</div>
+        </th>
+        <th class="" scope="col">
+        <div class="slds-truncate" title="">Name</div>
+        </th>
+        <th class="" scope="col">
+        <div class="slds-truncate" title="">Permission Type</div>
+        </th>
+        <th class="" scope="col">
+            <div class="slds-truncate" title="">Access</div>
+            </th>
+            <th class="" scope="col">
+                <div class="slds-truncate" title="">Value</div>
+                </th>
+        </tr>
+    </thead>
+    <tbody>
+<template for:each={data} for:item="firstCol" scope="rowgroup">
+    <tr key={firstCol.type} >
+        <td rowspan={firstCol.length}>{firstCol.type}</td>
+<template for:each={firstCol.permissionSetProfileData} for:item="secondCol">
+    
+        <td rowspan={secondCol.length} scope="rowgroup" key={secondCol.name}>
+            {secondCol.name}   
+    <template for:each={secondCol.permissionTypeData} for:item="thirdCol">
+        <tr key={thirdCol.permissionType}>
+          <td rowspan={thirdCol.length}  scope="rowgroup">
+            {thirdCol.permissionType}
+          </td>
+       
+        </tr>
+    
+        <template for:each={thirdCol.permissions} for:item="fourthCol">
+              <tr key={fourthCol.access}>
+                <td>{fourthCol.access}</td>
+              </tr>
+        </template>
+    
+    </template>
+</td> 
+</template>
+</tr>
+</template>
+    </tbody>
+    </table>
+
+</template> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <table>
+<template for:each={data} for:item="firstCol" >
+
+<tr key={firstCol.type} >
+<td style="padding-left: 100px">{firstCol.type} </td>
+<template for:each={firstCol.permissionSetProfileData} for:item="secondCol" >           
+<tr key={secondCol.name}  >
+    <td style="padding-left: 100px">{secondCol.name}</td>
+    <template for:each={secondCol.permissionTypeData} for:item="thirdCol">
+        <tr key={thirdCol.permissionType} >
+            <td style="padding-left: 100px">{thirdCol.permissionType}</td>
+            <template for:each={thirdCol.permissions} for:item="fourthCol">
+                <tr key={fourthCol.value}>                         
+                <td style="padding-left: 100px">{fourthCol.value}</td>                                                      
+                <td style="padding-left: 100px">{fourthCol.access}</td>
+                        
+
+                
+                </tr>
+            </template>
+        </tr>
+    </template>
+</tr>
+</template>           
+</tr>
+</template>
+
+</table>
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
