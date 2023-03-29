@@ -80,27 +80,26 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
                     if(opList != null && opList.size() != 0){
                         for(ObjectPermissions opData : opList){
                             permissions.add(getPermissionObject(opData));
-                            pspdRowspan += 1;
-                            pdwRowspan += 1;
                         }
-                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Object Permissions', permissions, permissions.size()));
+                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Object Permissions', permissions, permissions.size() + 1));
+                        pspdRowspan += permissions.size() + 1;
                     }
                     permissions = new List<PermissionDataWrapper.Permission>();
                     if(fpList != null && fpList.size() != 0){
                         for(FieldPermissions fpData : fpList){
                             permissions.add(getPermissionObject(fpData));
-                            pspdRowspan += 1;
-                            pdwRowspan += 1;
                         }
-                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Field Permissions', permissions, permissions.size()));
+                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Field Permissions', permissions, permissions.size() + 1));
+                        pspdRowspan += permissions.size() + 1;
                     }
                     pspd.permissionTypeData = ptdList;
-                    pspd.rowspan = pspdRowspan;
+                    pspd.rowspan = pspdRowspan + 1;
+                    pdwRowspan += pspdRowspan + 1;
                     pspdList.add(pspd);
                 }
             }
             pdw.permissionSetProfileData = pspdList;
-            pdw.rowspan = pdwRowspan; 
+            pdw.rowspan = pdwRowspan + 1; 
             wrappedData.add(pdw);
         }
         if(objectPermissionByPermissionSet.size() != 0 || fieldPermissionByPermissionSet.size() != 0){
@@ -120,27 +119,26 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
                     if(opList != null && opList.size() != 0){
                         for(ObjectPermissions opData : opList){
                             permissions.add(getPermissionObject(opData));
-                            pspdRowspan += 1;
-                            pdwRowspan += 1;
                         }
-                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Object Permissions', permissions, permissions.size()));
+                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Object Permissions', permissions, permissions.size() + 1));
+                        pspdRowspan += permissions.size() + 1;
                     }
                     permissions = new List<PermissionDataWrapper.Permission>();
                     if(fpList != null && fpList.size() != 0){
                         for(FieldPermissions fpData : fpList){
                             permissions.add(getPermissionObject(fpData));
-                            pspdRowspan += 1;
-                            pdwRowspan += 1;
                         }
-                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Field Permissions', permissions, permissions.size()));
+                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Field Permissions', permissions, permissions.size() + 1));
+                        pspdRowspan += permissions.size() + 1;
                     }
                     pspd.permissionTypeData = ptdList;
-                    pspd.rowspan = pspdRowspan;
+                    pspd.rowspan = pspdRowspan + 1;
+                    pdwRowspan += pspdRowspan + 1;
                     pspdList.add(pspd);
                 }
             }
             pdw.permissionSetProfileData = pspdList; 
-            pdw.rowspan = pdwRowspan; 
+            pdw.rowspan = pdwRowspan + 1; 
             wrappedData.add(pdw);
         }
         return wrappedData;

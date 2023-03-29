@@ -1,20 +1,19 @@
 export const sample = [
     {
         type: 'Profile',
-        rowspan: 10,
+        rowspan: 17,
         permissionSetProfileData: [
             {
-                rowspan: 5,
+                rowspan: 8,
                 permissionTypeData: [
                     {
                         permissionType: 'Object Permissions',
-                        rowspan: 2,
+                        rowspan: 3,
                         permissions: [
                             {
                                 value: 'WorkOrder',
                                 access: 'Read, View All Records'
                             },
-
                             {
                                 value: 'AssetAction',
                                 access: 'Read, View All Records'
@@ -23,7 +22,7 @@ export const sample = [
                     },
                     {
                         permissionType: 'Field Permissions',
-                        rowspan: 3,
+                        rowspan: 4,
                         permissions: [
                             {
                                 value: 'ContactPointEmail.ParentId',
@@ -43,11 +42,11 @@ export const sample = [
                 name: 'Analytics Cloud Integration User'
             },
             {
-                rowspan: 5,
+                rowspan: 8,
                 permissionTypeData: [
                     {
                         permissionType: 'Object Permissions',
-                        rowspan: 3,
+                        rowspan: 4,
                         permissions: [
                             {
                                 value: 'StreamingChannel',
@@ -65,7 +64,7 @@ export const sample = [
                     },
                     {
                         permissionType: 'Field Permissions',
-                        rowspan: 2,
+                        rowspan: 3,
                         permissions: [
                             {
                                 value: 'ContractLineItem.LocationId',
@@ -84,14 +83,14 @@ export const sample = [
     },
     {
         type: 'Permission Set',
-        rowspan: 4,
+        rowspan: 8,
         permissionSetProfileData: [
             {
-                rowspan: 4,
+                rowspan: 7,
                 permissionTypeData: [
                     {
                         permissionType: 'Object Permissions',
-                        rowspan: 2,
+                        rowspan: 3,
                         permissions: [
                             {
                                 value: 'WorkOrder',
@@ -105,7 +104,7 @@ export const sample = [
                     },
                     {
                         permissionType: 'Field Permissions',
-                        rowspan: 2,
+                        rowspan: 3,
                         permissions: [
                             {
                                 value: 'ContactPointEmail.ParentId',
