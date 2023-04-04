@@ -6,7 +6,7 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
  	public List<ComboboxDataWrapper> getPermissionSet(){
         return convertPermissionSetsToWrapper(PermissionSetSelector.newInstance().getPermissionSet());
  	}
-    public static List<PermissionDataWrapper> getAllPermissionData(){
+    public List<PermissionDataWrapper> getAllPermissionData(){
         List<FieldPermissions> fieldPermissions = FieldPermissionsSelector.newInstance().getAllRecords();
         List<ObjectPermissions> objectPermissions = ObjectPermissionSelector.newInstance().getAllRecords();
         List<PermissionSet> permissionSets = PermissionSetSelector.newInstance().getPermissionSet();
@@ -79,7 +79,7 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
     }
 
     
-    private static List<PermissionDataWrapper> convertAllDataToWrapper(List<FieldPermissions> fieldPermissions, List<ObjectPermissions> objectPermissions, List<PermissionSet> permissionSets, List<Profile> profiles){
+    private List<PermissionDataWrapper> convertAllDataToWrapper(List<FieldPermissions> fieldPermissions, List<ObjectPermissions> objectPermissions, List<PermissionSet> permissionSets, List<Profile> profiles){
         if(fieldPermissions.isEmpty() && objectPermissions.isEmpty()){
             return new List<PermissionDataWrapper>();
         }
@@ -216,7 +216,7 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         }
         return wrappedData;
     }
-    private static PermissionDataWrapper.Permission getPermissionObject(SObject obj, Integer key){
+    private PermissionDataWrapper.Permission getPermissionObject(SObject obj, Integer key){
         String access = 'Read';
         
         if(obj.getSObjectType() == Schema.ObjectPermissions.getSObjectType()){

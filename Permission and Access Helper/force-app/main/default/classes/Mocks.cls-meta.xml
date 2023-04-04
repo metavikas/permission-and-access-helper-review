@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
-<<<<<<< HEAD
 	<apiVersion>56.0</apiVersion>
 	<status>Active</status>
 </ApexClass>
-=======
-    <apiVersion>56.0</apiVersion>
-    <status>Active</status>
-</ApexClass>
->>>>>>> 153a1c53cd67eb6e9180fefc8f2826a0720b84f3
