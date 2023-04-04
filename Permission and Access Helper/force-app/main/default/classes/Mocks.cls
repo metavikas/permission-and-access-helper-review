@@ -2,7 +2,6 @@
 @isTest
 public class Mocks
 {
-<<<<<<< HEAD
 	public class ProfileSelector extends fflib_SObjectMocks.SObjectSelector implements IProfileSelector
 	{
 		private fflib_ApexMocks mocks;
@@ -113,100 +112,3 @@ public class Mocks
 	}
 
 }
-=======
-    public class ProfileSelector extends fflib_SObjectMocks.SObjectSelector implements IProfileSelector
-    {
-        private fflib_ApexMocks mocks;
-
-        public ProfileSelector(fflib_ApexMocks mocks)
-        {
-            super(mocks);
-            this.mocks = mocks;
-        }
-
-        public List<Profile> getProfile()
-        {
-            return (List<Profile>) mocks.mockNonVoidMethod(this, 'getProfile', new List<Type> {}, new List<Object> {});
-        }
-    }
-
-    public class PermissionService implements IPermissionService
-    {
-        private fflib_ApexMocks mocks;
-
-        public PermissionService(fflib_ApexMocks mocks)
-        {
-            this.mocks = mocks;
-        }
-
-        public List<ComboboxDataWrapper> getProfile()
-        {
-            return (List<ComboboxDataWrapper>) mocks.mockNonVoidMethod(this, 'getProfile', new List<Type> {}, new List<Object> {});
-        }
-
-        public List<ComboboxDataWrapper> getPermissionSet()
-        {
-            return (List<ComboboxDataWrapper>) mocks.mockNonVoidMethod(this, 'getPermissionSet', new List<Type> {}, new List<Object> {});
-        }
-
-        public List<PermissionDataWrapper> getAllPermissionData()
-        {
-            return (List<PermissionDataWrapper>) mocks.mockNonVoidMethod(this, 'getAllPermissionData', new List<Type> {}, new List<Object> {});
-        }
-
-        public List<ComboboxDataWrapper> getOjbectOptions()
-        {
-            return (List<ComboboxDataWrapper>) mocks.mockNonVoidMethod(this, 'getOjbectOptions', new List<Type> {}, new List<Object> {});
-        }
-    }
-
-    public class FieldPermissionSelector extends fflib_SObjectMocks.SObjectSelector implements IFieldPermissionSelector
-    {
-        private fflib_ApexMocks mocks;
-
-        public FieldPermissionSelector(fflib_ApexMocks mocks)
-        {
-            super(mocks);
-            this.mocks = mocks;
-        }
-
-        public List<FieldPermissions> getAllRecords()
-        {
-            return (List<FieldPermissions>) mocks.mockNonVoidMethod(this, 'getAllRecords', new List<Type> {}, new List<Object> {});
-        }
-    }
-
-    public class ObjectPermissionSelector extends fflib_SObjectMocks.SObjectSelector implements IObjectPermissionSelector
-    {
-        private fflib_ApexMocks mocks;
-
-        public ObjectPermissionSelector(fflib_ApexMocks mocks)
-        {
-            super(mocks);
-            this.mocks = mocks;
-        }
-
-        public List<ObjectPermissions> getAllRecords()
-        {
-            return (List<ObjectPermissions>) mocks.mockNonVoidMethod(this, 'getAllRecords', new List<Type> {}, new List<Object> {});
-        }
-    }
-
-    public class PermissionSetSelector extends fflib_SObjectMocks.SObjectSelector implements IPermissionSetSelector
-    {
-        private fflib_ApexMocks mocks;
-
-        public PermissionSetSelector(fflib_ApexMocks mocks)
-        {
-            super(mocks);
-            this.mocks = mocks;
-        }
-
-        public List<PermissionSet> getPermissionSet()
-        {
-            return (List<PermissionSet>) mocks.mockNonVoidMethod(this, 'getPermissionSet', new List<Type> {}, new List<Object> {});
-        }
-    }
-
-}
->>>>>>> 153a1c53cd67eb6e9180fefc8f2826a0720b84f3
