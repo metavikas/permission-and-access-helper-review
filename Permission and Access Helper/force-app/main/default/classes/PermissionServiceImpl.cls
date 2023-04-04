@@ -1,20 +1,20 @@
 public with sharing class PermissionServiceImpl implements IPermissionService{
     
  	public List<ComboboxDataWrapper> getProfile(){
-        return convertProfilesToWrapper(ProfileSelector.newInstance().getProfile());
+        return convertProfilesToWrapper(ProfileSelector.newInstance().getAllRecords());
  	}
  	public List<ComboboxDataWrapper> getPermissionSet(){
-        return convertPermissionSetsToWrapper(PermissionSetSelector.newInstance().getPermissionSet());
+        return convertPermissionSetsToWrapper(PermissionSetSelector.newInstance().getAllRecords());
  	}
     public List<PermissionDataWrapper> getAllPermissionData(){
         List<FieldPermissions> fieldPermissions = FieldPermissionsSelector.newInstance().getAllRecords();
         List<ObjectPermissions> objectPermissions = ObjectPermissionSelector.newInstance().getAllRecords();
-        List<PermissionSet> permissionSets = PermissionSetSelector.newInstance().getPermissionSet();
-        List<Profile> profiles = ProfileSelector.newInstance().getProfile();
+        List<PermissionSet> permissionSets = PermissionSetSelector.newInstance().getAllRecords();
+        List<Profile> profiles = ProfileSelector.newInstance().getAllRecords();
         List<PermissionDataWrapper> dataToReturn = convertAllDataToWrapper(fieldPermissions, objectPermissions, permissionSets, profiles);
         return dataToReturn;
     }
-    public List<ComboboxDataWrapper> getOjbectOptionsForObjectPermissions(){
+    public List<ComboboxDataWrapper> getObjectOptionsForObjectPermissions(){
         List<ObjectPermissions> objectPermissions = ObjectPermissionSelector.newInstance().getAllRecords();
         List<ComboboxDataWrapper> wrappedData = new List<ComboboxDataWrapper>();
         Set<String> objectsInUse = new Set<String>();
@@ -35,7 +35,7 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         }
         return wrappedData;
     }
-    public List<ComboboxDataWrapper> getOjbectOptionsForFieldPermissions(){
+    public List<ComboboxDataWrapper> getObjectOptionsForFieldPermissions(){
         List<FieldPermissions> fieldPermissions = FieldPermissionsSelector.newInstance().getAllRecords();
         List<ComboboxDataWrapper> wrappedData = new List<ComboboxDataWrapper>();
         Set<String> objectsInUse = new Set<String>();

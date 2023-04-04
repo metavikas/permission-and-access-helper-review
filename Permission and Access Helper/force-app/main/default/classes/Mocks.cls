@@ -12,7 +12,7 @@ public class Mocks
 			this.mocks = mocks;
 		}
 
-		public List<Profile> getProfile()
+		public List<Profile> getAllRecords()
 		{
 			return (List<Profile>) mocks.mockNonVoidMethod(this, 'getProfile', new List<Type> {}, new List<Object> {});
 		}
@@ -42,12 +42,12 @@ public class Mocks
 			return (List<PermissionDataWrapper>) mocks.mockNonVoidMethod(this, 'getAllPermissionData', new List<Type> {}, new List<Object> {});
 		}
 
-		public List<ComboboxDataWrapper> getOjbectOptionsForObjectPermissions()
+		public List<ComboboxDataWrapper> getObjectOptionsForObjectPermissions()
 		{
 			return (List<ComboboxDataWrapper>) mocks.mockNonVoidMethod(this, 'getOjbectOptionsForObjectPermissions', new List<Type> {}, new List<Object> {});
 		}
 
-		public List<ComboboxDataWrapper> getOjbectOptionsForFieldPermissions()
+		public List<ComboboxDataWrapper> getObjectOptionsForFieldPermissions()
 		{
 			return (List<ComboboxDataWrapper>) mocks.mockNonVoidMethod(this, 'getOjbectOptionsForFieldPermissions', new List<Type> {}, new List<Object> {});
 		}
@@ -105,10 +105,9 @@ public class Mocks
 			this.mocks = mocks;
 		}
 
-		public List<PermissionSet> getPermissionSet()
+		public List<PermissionSet> getAllRecords()
 		{
 			return (List<PermissionSet>) mocks.mockNonVoidMethod(this, 'getPermissionSet', new List<Type> {}, new List<Object> {});
 		}
 	}
-
 }

@@ -14,7 +14,7 @@ public class ProfileSelector extends fflib_SObjectSelector implements IProfileSe
         return 'Name ASC';
     }
 
-    public List<Profile> getProfile(){
+    public List<Profile> getAllRecords(){
         return(List<Profile>) Database.query(
             newQueryFactory()
             .toSOQL());
