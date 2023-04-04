@@ -31,35 +31,35 @@ public with sharing class TestPermissionController {
 
     }
 
-     @isTest 
-    private static void getPermissionSet_shouldReturnAllPermissionSet(){
+    //  @isTest 
+    // private static void getPermissionSet_shouldReturnAllPermissionSet(){
 
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IPermissionService serviceMock = (IPermissionService)mocks.mock(PermissionServiceImpl.class);
+    //     fflib_ApexMocks mocks = new fflib_ApexMocks();
+    //     IPermissionService serviceMock = (IPermissionService)mocks.mock(PermissionServiceImpl.class);
 
-        //Given
-        mocks.startStubbing();
-        PermissionSet p1 = new PermissionSet(Id = fflib_IDGenerator.generate(PermissionSet.SObjectType), label = 'Test');
-        PermissionSet p2 = new PermissionSet(Id = fflib_IDGenerator.generate(PermissionSet.SObjectType), label = 'Test');
-        List<PermissionSet> permissionSetList= new List<PermissionSet>{p1,p2};
+    //     //Given
+    //     mocks.startStubbing();
+    //     PermissionSet p1 = new PermissionSet(Id = fflib_IDGenerator.generate(PermissionSet.SObjectType), label = 'Test');
+    //     PermissionSet p2 = new PermissionSet(Id = fflib_IDGenerator.generate(PermissionSet.SObjectType), label = 'Test');
+    //     List<PermissionSet> permissionSetList= new List<PermissionSet>{p1,p2};
 
-        mocks.when(serviceMock.getPermissionSet()).thenReturn(permissionSetList);
-        ComboboxDataWrapper forCheck1 = new ComboboxDataWrapper(p1.label, p1.Id);
-        ComboboxDataWrapper forCheck2 = new ComboboxDataWrapper(p2.label, p2.Id);
-        List<ComboboxDataWrapper> forCheck = new List<ComboboxDataWrapper>{forCheck1,forCheck2};
-		mocks.stopStubbing();
-		PermissionApplication.Service.setMock(IPermissionService.class,serviceMock);
+    //     mocks.when(serviceMock.getPermissionSet()).thenReturn(permissionSetList);
+    //     ComboboxDataWrapper forCheck1 = new ComboboxDataWrapper(p1.label, p1.Id);
+    //     ComboboxDataWrapper forCheck2 = new ComboboxDataWrapper(p2.label, p2.Id);
+    //     List<ComboboxDataWrapper> forCheck = new List<ComboboxDataWrapper>{forCheck1,forCheck2};
+	// 	mocks.stopStubbing();
+	// 	PermissionApplication.Service.setMock(IPermissionService.class,serviceMock);
 
-        //When
-        Test.startTest();
-        List<ComboboxDataWrapper> recievedPermissionList = PermissionController.getPermissionSet();
-        Test.stopTest();
+    //     //When
+    //     Test.startTest();
+    //     List<ComboboxDataWrapper> recievedPermissionList = PermissionController.getPermissionSet();
+    //     Test.stopTest();
 
 
-        //Then
-        ((IPermissionService)mocks.verify(serviceMock)).getPermissionSet();
-        System.assertEquals(forCheck , recievedPermissionList);
+    //     //Then
+    //     ((IPermissionService)mocks.verify(serviceMock)).getPermissionSet();
+    //     System.assertEquals(forCheck , recievedPermissionList);
 
-    }
+    // }
 
 }

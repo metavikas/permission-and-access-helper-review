@@ -15,7 +15,7 @@ public class PermissionSetSelector extends fflib_SObjectSelector implements IPer
         return 'Label ASC';
     }
     
-    public List<PermissionSet> getPermissionSet(){
+    public List<PermissionSet> getAllRecords(){
             return(List<PermissionSet>) Database.query(
             newQueryFactory()
             .setCondition('IsOwnedByProfile = false')

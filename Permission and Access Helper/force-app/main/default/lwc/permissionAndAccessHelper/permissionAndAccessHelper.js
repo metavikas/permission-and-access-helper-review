@@ -2,8 +2,8 @@ import { LightningElement } from 'lwc';
 import getAllPermissionData from '@salesforce/apex/PermissionController.getAllPermissionData';
 import getProfile from '@salesforce/apex/PermissionController.getProfile';
 import getPermissionSet from '@salesforce/apex/PermissionController.getPermissionSet';
-import getOjbectOptionsForObjectPermissions from '@salesforce/apex/PermissionController.getOjbectOptionsForObjectPermissions';
-import getOjbectOptionsForFieldPermissions from '@salesforce/apex/PermissionController.getOjbectOptionsForFieldPermissions';
+import getObjectOptionsForObjectPermissions from '@salesforce/apex/PermissionController.getObjectOptionsForObjectPermissions';
+import getObjectOptionsForFieldPermissions from '@salesforce/apex/PermissionController.getObjectOptionsForFieldPermissions';
 import getFieldOptionsByObject from '@salesforce/apex/PermissionController.getFieldOptionsByObject';
 
 const filterOptions = [
@@ -102,7 +102,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
         } else if (this.selectedFilterType == 'Object') {
             this.placeholderForDataFilter = 'Select an Object';
             this.selectedDataValue = '';
-            getOjbectOptionsForObjectPermissions()
+            getObjectOptionsForObjectPermissions()
                 .then((result) => {
                     this.optionsForDataFilter = result;
                     this.dataComboboxDisabled = false;
@@ -115,7 +115,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
             this.placeholderForDataFilter = 'Select an Object';
             this.fieldComboboxDisabled = true;
             this.selectedDataValue = '';
-            getOjbectOptionsForFieldPermissions()
+            getObjectOptionsForFieldPermissions()
                 .then((result) => {
                     this.optionsForDataFilter = result;
                     this.dataComboboxDisabled = false;
