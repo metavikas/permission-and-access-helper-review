@@ -10,6 +10,10 @@ public class PermissionSetSelector extends fflib_SObjectSelector implements IPer
     public Schema.SObjectType getSObjectType() {
         return PermissionSet.sObjectType;
     }
+
+    public override String getOrderBy() {
+        return 'Label ASC';
+    }
     
     public List<PermissionSet> getPermissionSet(){
             return(List<PermissionSet>) Database.query(

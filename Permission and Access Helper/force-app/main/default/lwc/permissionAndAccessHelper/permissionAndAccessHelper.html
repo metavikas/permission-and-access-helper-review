@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title="Permission and Access Helper">
+        <div class="slds-var-m-around_small slds-grid slds-is-relative">
+            <lightning-spinner if:true={isComboboxLoading} size="small"></lightning-spinner>
+            <lightning-combobox class="slds-var-m-horizontal_small slds-size_1-of-4" name="Filter Type"
+                label="Filter Based On" options={filterOptions} value={selectedFilterType}
+                onchange={handleFilterTypeChange}>
+            </lightning-combobox>
+            <template if:true={isFilterTypeSelected}>
+                <lightning-combobox class="slds-var-m-horizontal_small slds-size_1-of-4" name="Filter"
+                    label="Select Value To Filter On" placeholder={placeholderForDataFilter}
+                    options={optionsForDataFilter} value={selectedDataValue} onchange={handleDataFilterChange}
+                    disabled={dataComboboxDisabled}>
+                </lightning-combobox>
+            </template>
+            <template if:true={isFilterTypeField}>
+                <div class="slds-size_1-of-4">
+                    <lightning-combobox class="slds-var-m-horizontal_small" name="Field"
+                        label="Select a Field To Filter" placeholder='Select a Field' options={optionsForFieldFilter}
+                        value={selectedField} disabled={fieldComboboxDisabled} onchange={handleFieldChange}>
+                    </lightning-combobox>
+                    <template if:false={isObjectSelected}>
+                        <div class="slds-var-m-horizontal_small">
+                            <p>Please Select an Object First to then select a field</p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+        <div>
+            <template if:true={isLoading}>
+                <lightning-spinner size="large"></lightning-spinner>
+            </template>
+            <c-table-to-render-data if:false={isLoading} render-data={dataToRender}></c-table-to-render-data>
+        </div>
+    </lightning-card>
+</template>

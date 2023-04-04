@@ -14,12 +14,79 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         List<PermissionDataWrapper> dataToReturn = convertAllDataToWrapper(fieldPermissions, objectPermissions, permissionSets, profiles);
         return dataToReturn;
     }
+    public List<ComboboxDataWrapper> getOjbectOptionsForObjectPermissions(){
+        List<ObjectPermissions> objectPermissions = ObjectPermissionSelector.newInstance().getAllRecords();
+        List<ComboboxDataWrapper> wrappedData = new List<ComboboxDataWrapper>();
+        Set<String> objectsInUse = new Set<String>();
+        for(ObjectPermissions op : objectPermissions){
+            objectsInUse.add(op.SobjectType);
+        }
+        List<String> objectApinameList = new List<String>();
+        objectApinameList.addAll(objectsInUse);
+        objectApinameList.sort();
+        Map<String, SObjectType> objectMap = Schema.getGlobalDescribe();
+        for(String obj : objectApinameList){
+            SObjectType objectFromMap = objectMap.get(obj);
+            String label = obj;
+            if(objectFromMap != null){
+                label = objectFromMap.getDescribe().getLabel();
+            }
+            wrappedData.add(new ComboboxDataWrapper(label, obj));
+        }
+        return wrappedData;
+    }
+    public List<ComboboxDataWrapper> getOjbectOptionsForFieldPermissions(){
+        List<FieldPermissions> fieldPermissions = FieldPermissionsSelector.newInstance().getAllRecords();
+        List<ComboboxDataWrapper> wrappedData = new List<ComboboxDataWrapper>();
+        Set<String> objectsInUse = new Set<String>();
+        for(FieldPermissions fp : fieldPermissions){
+            objectsInUse.add(fp.SobjectType);
+        }
+        List<String> objectApinameList = new List<String>();
+        objectApinameList.addAll(objectsInUse);
+        objectApinameList.sort();
+        Map<String, SObjectType> objectMap = Schema.getGlobalDescribe();
+        for(String obj : objectApinameList){
+            SObjectType objectFromMap = objectMap.get(obj);
+            String label = obj;
+            if(objectFromMap != null){
+                label = objectFromMap.getDescribe().getLabel();
+            }
+            wrappedData.add(new ComboboxDataWrapper(label, obj));
+        }
+        return wrappedData;
+    }
+    public List<ComboboxDataWrapper> getFieldOptionsByObject(String objectName){
+        List<FieldPermissions> fieldPermissions = FieldPermissionsSelector.newInstance().getRecordsByObject(objectName);
+        List<ComboboxDataWrapper> wrappedData = new List<ComboboxDataWrapper>();
+        List<Schema.DescribeSObjectResult> descResult = Schema.describeSObjects(new String[]{objectName});
+        Map<String, Schema.SObjectField> fields = descResult[0].fields.getMap();
+        Set<String> fieldsInFP = new Set<String>();
+        for(FieldPermissions fp : fieldPermissions){
+            fieldsInFP.add(fp.Field.split('\\.')[1]);
+        }
+        System.debug(fieldsInFP);
+        for (String field : fieldsInFP){
+            Schema.SObjectField fld = fields.get(field);
+            String label = field;
+            if(fld != null){
+                label = fld.getDescribe().getLabel();
+            }
+            wrappedData.add( new ComboboxDataWrapper(label, field));
+        }
+        System.debug(wrappedData);
+        return wrappedData;
+    }
+
     
     private static List<PermissionDataWrapper> convertAllDataToWrapper(List<FieldPermissions> fieldPermissions, List<ObjectPermissions> objectPermissions, List<PermissionSet> permissionSets, List<Profile> profiles){
         if(fieldPermissions.isEmpty() && objectPermissions.isEmpty()){
             return new List<PermissionDataWrapper>();
         }
-        
+        Integer keyFortype = 0;
+        Integer keyForPermissionProfile = 0;
+        Integer keyForPermissionType = 0;     
+        Integer keyForPermission = 0;   
         List<PermissionDataWrapper> wrappedData = new List<PermissionDataWrapper>();
         Map<String, List<ObjectPermissions>> objectPermissionByProfile= new Map<String, List<ObjectPermissions>>();
         Map<String, List<ObjectPermissions>> objectPermissionByPermissionSet = new Map<String, List<ObjectPermissions>>();
@@ -66,6 +133,7 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         if(objectPermissionByProfile.size() != 0 || fieldPermissionByProfile.size() != 0){
             PermissionDataWrapper pdw = new PermissionDataWrapper();
             pdw.type = 'Profile';
+            pdw.key = keyFortype++;
             Integer pdwRowspan = 0;
             List<PermissionDataWrapper.PermissionSetProfileData> pspdList = new List<PermissionDataWrapper.PermissionSetProfileData>();
             for(Profile profile : profiles){
@@ -74,22 +142,24 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
                 if((opList != null && opList.size() != 0) || (fpList != null && fpList.size() != 0)){
                     PermissionDataWrapper.PermissionSetProfileData pspd = new PermissionDataWrapper.PermissionSetProfileData();
                     pspd.name = profile.Name;
+                    pspd.key = keyForPermissionProfile++;
+                    pspd.id = profile.Id;
                     Integer pspdRowspan = 0;
                     List<PermissionDataWrapper.Permission> permissions = new List<PermissionDataWrapper.Permission>();
                     List<PermissionDataWrapper.PermissionTypeData> ptdList = new List<PermissionDataWrapper.PermissionTypeData>();
                     if(opList != null && opList.size() != 0){
                         for(ObjectPermissions opData : opList){
-                            permissions.add(getPermissionObject(opData));
+                            permissions.add(getPermissionObject(opData, keyForPermission++));
                         }
-                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Object Permissions', permissions, permissions.size() + 1));
+                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Object Permissions', permissions, permissions.size() + 1, keyForPermissionType++));
                         pspdRowspan += permissions.size() + 1;
                     }
                     permissions = new List<PermissionDataWrapper.Permission>();
                     if(fpList != null && fpList.size() != 0){
                         for(FieldPermissions fpData : fpList){
-                            permissions.add(getPermissionObject(fpData));
+                            permissions.add(getPermissionObject(fpData, keyForPermission++));
                         }
-                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Field Permissions', permissions, permissions.size() + 1));
+                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Field Permissions', permissions, permissions.size() + 1, keyForPermissionType++));
                         pspdRowspan += permissions.size() + 1;
                     }
                     pspd.permissionTypeData = ptdList;
@@ -105,6 +175,7 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         if(objectPermissionByPermissionSet.size() != 0 || fieldPermissionByPermissionSet.size() != 0){
             PermissionDataWrapper pdw = new PermissionDataWrapper();
             pdw.type = 'Permission Set';
+            pdw.key = keyFortype++;
             Integer pdwRowspan = 0;
             List<PermissionDataWrapper.PermissionSetProfileData> pspdList = new List<PermissionDataWrapper.PermissionSetProfileData>();
             for(PermissionSet permissionSet : permissionSets){
@@ -112,23 +183,25 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
                 List<FieldPermissions> fpList = fieldPermissionByPermissionSet.get(permissionSet.Id);
                 if((opList != null && opList.size() != 0) || (fpList != null && fpList.size() != 0)){
                     PermissionDataWrapper.PermissionSetProfileData pspd = new PermissionDataWrapper.PermissionSetProfileData();
-                    pspd.name = permissionSet.Name;
+                    pspd.name = permissionSet.Label;
+                    pspd.key = keyForPermissionProfile++;
+                    pspd.id = permissionSet.Id;
                     Integer pspdRowspan = 0;
                     List<PermissionDataWrapper.Permission> permissions = new List<PermissionDataWrapper.Permission>();
                     List<PermissionDataWrapper.PermissionTypeData> ptdList = new List<PermissionDataWrapper.PermissionTypeData>();
                     if(opList != null && opList.size() != 0){
                         for(ObjectPermissions opData : opList){
-                            permissions.add(getPermissionObject(opData));
+                            permissions.add(getPermissionObject(opData, keyForPermission++));
                         }
-                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Object Permissions', permissions, permissions.size() + 1));
+                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Object Permissions', permissions, permissions.size() + 1, keyForPermissionType++));
                         pspdRowspan += permissions.size() + 1;
                     }
                     permissions = new List<PermissionDataWrapper.Permission>();
                     if(fpList != null && fpList.size() != 0){
                         for(FieldPermissions fpData : fpList){
-                            permissions.add(getPermissionObject(fpData));
+                            permissions.add(getPermissionObject(fpData, keyForPermission++));
                         }
-                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Field Permissions', permissions, permissions.size() + 1));
+                        ptdList.add( new PermissionDataWrapper.PermissionTypeData('Field Permissions', permissions, permissions.size() + 1, keyForPermissionType++));
                         pspdRowspan += permissions.size() + 1;
                     }
                     pspd.permissionTypeData = ptdList;
@@ -143,8 +216,9 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         }
         return wrappedData;
     }
-    private static PermissionDataWrapper.Permission getPermissionObject(SObject obj){
+    private static PermissionDataWrapper.Permission getPermissionObject(SObject obj, Integer key){
         String access = 'Read';
+        
         if(obj.getSObjectType() == Schema.ObjectPermissions.getSObjectType()){
             if((boolean)obj.get('PermissionsEdit')){
                 access += ', Edit';
@@ -161,12 +235,12 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
             if((boolean)obj.get('PermissionsModifyAllRecords')){
                 access += ', Modify All Records';
             }
-            return new PermissionDataWrapper.Permission((String) obj.get('SobjectType'), access);
+            return new PermissionDataWrapper.Permission((String) obj.get('SobjectType'), access, key);
         } else if(obj.getSObjectType() == Schema.FieldPermissions.getSObjectType()){
             if((boolean)obj.get('PermissionsEdit')){
                 access += ', Edit';
             }
-          	return new PermissionDataWrapper.Permission((String) obj.get('Field'), access);
+          	return new PermissionDataWrapper.Permission((String) obj.get('Field'), access, key);
         }
        return null;
     }
