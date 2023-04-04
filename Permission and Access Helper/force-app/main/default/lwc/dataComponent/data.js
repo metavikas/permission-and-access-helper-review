@@ -1,14 +1,16 @@
-import { LightningElement } from 'lwc';
 
-//["TYPE","Name"]
-const JsonData=[
+
+const sample = [
     {
         type: 'Profile',
+        rowspan: 17,
         permissionSetProfileData: [
             {
+                rowspan: 8,
                 permissionTypeData: [
                     {
                         permissionType: 'Object Permissions',
+                        rowspan: 3,
                         permissions: [
                             {
                                 value: 'WorkOrder',
@@ -22,6 +24,7 @@ const JsonData=[
                     },
                     {
                         permissionType: 'Field Permissions',
+                        rowspan: 4,
                         permissions: [
                             {
                                 value: 'ContactPointEmail.ParentId',
@@ -41,9 +44,11 @@ const JsonData=[
                 name: 'Analytics Cloud Integration User'
             },
             {
+                rowspan: 8,
                 permissionTypeData: [
                     {
                         permissionType: 'Object Permissions',
+                        rowspan: 4,
                         permissions: [
                             {
                                 value: 'StreamingChannel',
@@ -61,6 +66,7 @@ const JsonData=[
                     },
                     {
                         permissionType: 'Field Permissions',
+                        rowspan: 3,
                         permissions: [
                             {
                                 value: 'ContractLineItem.LocationId',
@@ -79,11 +85,14 @@ const JsonData=[
     },
     {
         type: 'Permission Set',
+        rowspan: 8,
         permissionSetProfileData: [
             {
+                rowspan: 7,
                 permissionTypeData: [
                     {
                         permissionType: 'Object Permissions',
+                        rowspan: 3,
                         permissions: [
                             {
                                 value: 'WorkOrder',
@@ -97,6 +106,7 @@ const JsonData=[
                     },
                     {
                         permissionType: 'Field Permissions',
+                        rowspan: 3,
                         permissions: [
                             {
                                 value: 'ContactPointEmail.ParentId',
@@ -115,6 +125,4 @@ const JsonData=[
     }
 ];
 
-export {JsonData};
-
-    
+export {sample};

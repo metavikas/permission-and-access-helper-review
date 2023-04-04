@@ -1,0 +1,58 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th scope="col">
+                    <div class="slds-truncate">Type</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">Permission Type</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">Value</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">Access</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template if:true={data}>
+                <template for:each={data} for:item="typeData">
+                    <tr key={typeData.type} class="slds-hint-parent">
+                        <td rowspan={typeData.rowspan} data-label="typeData.type" title={typeData.type}>
+                            {typeData.type}
+                        </td>
+                    </tr>
+
+                    <template for:each={typeData.permissionSetProfileData} for:item="profileData">
+                        <tr key={profileData.name}>
+                            <td rowspan={profileData.rowspan} data-label="profileData.name" title={profileData.name}>
+                                {profileData.name}
+                            </td>
+                        </tr>
+
+                        <template for:each={profileData.permissionTypeData} for:item="permissionTypeData">
+                            <tr key={permissionTypeData.permissionType}>
+                                <td data-label="permissionTypeData.permissionType" rowspan={permissionTypeData.rowspan}
+                                    title={permissionTypeData.permissionType}>
+                                    {permissionTypeData.permissionType}
+                                </td>
+                            </tr>
+
+                            <template for:each={permissionTypeData.permissions} for:item="permissions">
+                                <tr key={permissions.value}>
+                                    <td data-label="permissions.value">{permissions.value}</td>
+                                    <td data-label="permissions.access">{permissions.access}</td>
+                                </tr>
+                            </template>
+                        </template>
+                    </template>
+                </template>
+            </template>
+        </tbody>
+    </table>
+</template>

@@ -14,6 +14,7 @@ public class PermissionSetSelector extends fflib_SObjectSelector implements IPer
     public List<PermissionSet> getPermissionSet(){
             return(List<PermissionSet>) Database.query(
             newQueryFactory()
+            .setCondition('IsOwnedByProfile = false')
             .toSOQL());
     }
     public static IPermissionSetSelector newInstance()
