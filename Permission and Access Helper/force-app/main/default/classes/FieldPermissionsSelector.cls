@@ -23,4 +23,10 @@ public class FieldPermissionsSelector extends fflib_SObjectSelector implements I
             .selectFields(new List<String>{'Parent.ProfileId', 'Parent.IsOwnedByProfile'})
             .toSOQL());
     }
+    public List<FieldPermissions> getRecordsByObject(String objectName){
+        return (List<FieldPermissions>) Database.query(
+            newQueryFactory()
+            .setCondition('SobjectType = :objectName')
+            .toSOQL());
+    }
 }

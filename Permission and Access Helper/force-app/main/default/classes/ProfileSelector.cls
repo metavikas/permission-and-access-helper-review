@@ -10,6 +10,10 @@ public class ProfileSelector extends fflib_SObjectSelector implements IProfileSe
         return Profile.sObjectType;
     }
     
+    public override String getOrderBy() {
+        return 'Name ASC';
+    }
+
     public List<Profile> getProfile(){
         return(List<Profile>) Database.query(
             newQueryFactory()

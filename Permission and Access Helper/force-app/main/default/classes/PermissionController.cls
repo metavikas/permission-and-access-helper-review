@@ -14,5 +14,20 @@ public class PermissionController {
     public static List<PermissionDataWrapper> getAllPermissionData(){
         return PermissionService.getAllPermissionData();
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<ComboboxDataWrapper> getOjbectOptionsForObjectPermissions(){
+        return PermissionService.getOjbectOptionsForObjectPermissions();
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<ComboboxDataWrapper> getOjbectOptionsForFieldPermissions(){
+        return PermissionService.getOjbectOptionsForFieldPermissions();
+    } 
+
+    @AuraEnabled(cacheable=true)
+    public static List<ComboboxDataWrapper> getFieldOptionsByObject(String objectName){
+        return PermissionService.getFieldOptionsByObject(objectName);
+    }
     
 }

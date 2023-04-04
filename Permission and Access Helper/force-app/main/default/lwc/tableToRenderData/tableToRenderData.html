@@ -1,4 +1,6 @@
 <template>
+<<<<<<< HEAD
+<<<<<<< HEAD
     <table  class="slds-table slds-table_cell-buffer slds-table_bordered">
         <thead>
             <tr class="slds-line-height_reset">
@@ -47,12 +49,107 @@
                                 <tr key={permissions.value} class="slds-hint-parent">
                                     <td data-label="permissions.value">{permissions.value}</td>
                                     <td data-label="permissions.access">{permissions.access}</td>
+=======
+    <div class="slds-var-p-horizontal_small">
+        <table
+            class="slds-table slds-table_fixed-layout">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Type">Type</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Permission Type">Permission Type</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Value">Value</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Access">Access</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template if:true={renderData}>
+                    <template for:each={renderData} for:item="typeData">
+                        <tr key={typeData.key} class="slds-hint-parent">
+                            <td rowspan={typeData.rowspan} data-label="typeData.type" title={typeData.type}>
+                                <div class="slds-truncate">{typeData.type}</div>
+                            </td>
+                        </tr>
+                        <template for:each={typeData.permissionSetProfileData} for:item="profileData">
+                            <tr key={profileData.key}>
+                                <td rowspan={profileData.rowspan} data-label="profileData.name" title={profileData.name}>
+                                    <div class="slds-truncate">{profileData.name}</div>
+                                </td>
+                            </tr>
+=======
+    <div class="slds-var-p-horizontal_small">
+        <table
+            class="slds-table slds-table_fixed-layout">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Type">Type</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Permission Type">Permission Type</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Value">Value</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Access">Access</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template if:true={renderData}>
+                    <template for:each={renderData} for:item="typeData">
+                        <tr key={typeData.key} class="slds-hint-parent">
+                            <td rowspan={typeData.rowspan} data-label="typeData.type" title={typeData.type}>
+                                <div class="slds-truncate">{typeData.type}</div>
+                            </td>
+                        </tr>
+                        <template for:each={typeData.permissionSetProfileData} for:item="profileData">
+                            <tr key={profileData.key}>
+                                <td rowspan={profileData.rowspan} data-label="profileData.name" title={profileData.name}>
+                                    <div class="slds-truncate">{profileData.name}</div>
+                                </td>
+                            </tr>
+>>>>>>> 9b9513e1ce37e7511c3060436fefd12e6bc6421c
+                            <template for:each={profileData.permissionTypeData} for:item="permissionTypeData">
+                                <tr key={permissionTypeData.key}>
+                                    <td data-label="permissionTypeData.permissionType" rowspan={permissionTypeData.rowspan}
+                                        title={permissionTypeData.permissionType}>
+                                        <div class="slds-truncate">{permissionTypeData.permissionType}</div>
+                                    </td>
+<<<<<<< HEAD
+>>>>>>> ed23d963fe0d19d0b60c0a2d3fbab269a1263111
+=======
+>>>>>>> 9b9513e1ce37e7511c3060436fefd12e6bc6421c
                                 </tr>
+                                <template for:each={permissionTypeData.permissions} for:item="permissions">
+                                    <tr key={permissions.key}>
+                                        <td data-label="permissions.value" title={permissions.value}>
+                                            <div class="slds-truncate">{permissions.value}</div>
+                                        </td>
+                                        <td data-label="permissions.access" title={permissions.access}>
+                                            <div class="slds-truncate">{permissions.access}</div>
+                                        </td>
+                                    </tr>
+                                </template>
                             </template>
                         </template>
                     </template>
                 </template>
-            </template>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </template>

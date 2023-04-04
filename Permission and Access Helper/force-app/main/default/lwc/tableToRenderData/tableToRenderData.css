@@ -1,5 +1,27 @@
 table,
 th,
 td {
-	border: 1px solid black;
+	border: 0.5px solid #e8e8e8;
 }
+
+td[rowspan] {
+	vertical-align: top;
+	text-align: left;
+}
+
+/* tbody {
+    display: block;
+    height: 500px;
+    overflow: auto;
+}
+thead, tbody tr {
+    display: table-row;
+    table-layout: fixed; even columns width , fix width of table too
+} */
+/* thead {
+    width: calc( 100% - 1em ) scrollbar is average 1em/16px width, remove it from thead width
+}*/
+
+/* table {
+    width: 400px;
+} */
