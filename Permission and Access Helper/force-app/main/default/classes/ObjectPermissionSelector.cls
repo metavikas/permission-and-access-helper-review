@@ -1,4 +1,4 @@
-public class ObjectPermissionSelector extends fflib_SObjectSelector implements IObjectPermissionSelector {
+public with sharing class ObjectPermissionSelector extends fflib_SObjectSelector implements IObjectPermissionSelector {
     
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField> {
