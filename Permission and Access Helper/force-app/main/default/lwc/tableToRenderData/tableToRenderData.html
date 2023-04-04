@@ -1,5 +1,5 @@
 <template>
-    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+    <table  class="slds-table slds-table_cell-buffer slds-table_bordered">
         <thead>
             <tr class="slds-line-height_reset">
                 <th scope="col">
@@ -29,14 +29,14 @@
                     </tr>
 
                     <template for:each={typeData.permissionSetProfileData} for:item="profileData">
-                        <tr key={profileData.name}>
+                        <tr key={profileData.name} class="slds-hint-parent">
                             <td rowspan={profileData.rowspan} data-label="profileData.name" title={profileData.name}>
                                 {profileData.name}
                             </td>
                         </tr>
 
                         <template for:each={profileData.permissionTypeData} for:item="permissionTypeData">
-                            <tr key={permissionTypeData.permissionType}>
+                            <tr key={permissionTypeData.permissionType} class="slds-hint-parent">
                                 <td data-label="permissionTypeData.permissionType" rowspan={permissionTypeData.rowspan}
                                     title={permissionTypeData.permissionType}>
                                     {permissionTypeData.permissionType}
@@ -44,7 +44,7 @@
                             </tr>
 
                             <template for:each={permissionTypeData.permissions} for:item="permissions">
-                                <tr key={permissions.value}>
+                                <tr key={permissions.value} class="slds-hint-parent">
                                     <td data-label="permissions.value">{permissions.value}</td>
                                     <td data-label="permissions.access">{permissions.access}</td>
                                 </tr>
