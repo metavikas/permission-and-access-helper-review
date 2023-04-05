@@ -53,7 +53,6 @@ public with sharing class TestPermissionAccessHelper {
 
         //Then
         ((IPermissionSetSelector)mocks.verify(selectorMock)).getAllRecords();
-       // System.assertEquals(forCheck ,recievedPermissionSetList); 
        System.assertEquals(recievedPermissionSetList.size(),permissionSetList.size());
        System.assertEquals(recievedPermissionSetList[0].label,'Test');         
 
@@ -86,21 +85,124 @@ public with sharing class TestPermissionAccessHelper {
         ObjectPermissions op1=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()));
         ObjectPermissions op2=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()));
         List<ObjectPermissions> opList=new List<ObjectPermissions>{op1,op2};
+
+
+        //List<PermissionDataWrapper> resultedList=
         mocks.startStubbing();
         mocks.when(profileSelectorMock.getAllRecords()).thenReturn(profileList);
+        mocks.when(profileSelectorMock.sObjectType()).thenReturn(Profile.sObjectType);
         mocks.when(permissionSetSelectorMock.getAllRecords()).thenReturn(permissionSetList);
+        mocks.when(permissionSetSelectorMock.sObjectType()).thenReturn(PermissionSet.sObjectType);
         mocks.when(objectPermissionSelectorMock.getAllRecords()).thenReturn(opList);
+        mocks.when(objectPermissionSelectorMock.sObjectType()).thenReturn(ObjectPermissions.getSObjectType());
         mocks.when(fieldPermissionSelectorMock.getAllRecords()).thenReturn(fpList);
+        mocks.when(fieldPermissionSelectorMock.sObjectType()).thenReturn(FieldPermissions.getSObjectType());
         mocks.stopStubbing();
         PermissionApplication.Selector.setMock(profileSelectorMock);
+        PermissionApplication.Selector.setMock(permissionSetSelectorMock);
+        PermissionApplication.Selector.setMock(objectPermissionSelectorMock);
+        PermissionApplication.Selector.setMock(fieldPermissionSelectorMock);
         Test.startTest();
         List<PermissionDataWrapper> res= PermissionService.getAllPermissionData();
         System.debug(res);
         Test.stopTest();
 
         ((IProfileSelector)mocks.verify(profileSelectorMock)).getAllRecords();
+        ((IPermissionSetSelector)mocks.verify(permissionSetSelectorMock)).getAllRecords();
+        ((IObjectPermissionSelector)mocks.verify(objectPermissionSelectorMock)).getAllRecords();
+        ((IFieldPermissionSelector)mocks.verify(fieldPermissionSelectorMock)).getAllRecords();
+        
+    }
 
+    @isTest
+    private static void test_service_getObjectOptionsForObjectPermissions_shouldReturnAllObjectPermission(){
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IObjectPermissionSelector objectPermissionSelectorMock= new Mocks.ObjectPermissionSelector(mocks);
 
+        ObjectPermissions op1=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),SObjectType='Test1');
+        ObjectPermissions op2=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),SObjectType='Test2');
+        List<ObjectPermissions> opList=new List<ObjectPermissions>{op1,op2};
+
+        ComboboxDataWrapper objPermWrapper1 = new ComboboxDataWrapper( op1.SObjectType,op1.SObjectType);
+        ComboboxDataWrapper objPermWrapper2 = new ComboboxDataWrapper( op2.SObjectType,op2.SObjectType);
+        List<ComboboxDataWrapper> sentObjPermWrapper= new List<ComboboxDataWrapper>{objPermWrapper1,objPermWrapper2};
+
+        mocks.startStubbing();
+        mocks.when(objectPermissionSelectorMock.getAllRecords()).thenReturn(opList);
+        mocks.when(objectPermissionSelectorMock.sObjectType()).thenReturn(ObjectPermissions.getSObjectType());
+        mocks.stopStubbing();
+
+        PermissionApplication.Selector.setMock(objectPermissionSelectorMock);
+
+        test.startTest();
+        List<ComboboxDataWrapper> result= PermissionService.getObjectOptionsForObjectPermissions();
+        system.debug(result);
+        test.stopTest();
+
+        ((IObjectPermissionSelector) mocks.verify(objectPermissionSelectorMock)).getAllRecords();
+        System.assertEquals(sentObjPermWrapper[0].label, result[0].label);
+        System.assertEquals(sentObjPermWrapper[0].value, result[0].value);
+    }
+
+    @isTest
+    private static void test_service_getObjectOptionsForFieldPermissions_shouldReturnAllFieldOptions(){
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IFieldPermissionSelector fieldPermissionSelectorMock= new Mocks.FieldPermissionSelector(mocks);
+
+        FieldPermissions fp1 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()),SObjectType='Test1');
+        FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()),SObjectType='Test2');
+        List<FieldPermissions> fpList=new List<FieldPermissions>{fp1,fp2};
+        ComboboxDataWrapper fldPermWrapper1 = new ComboboxDataWrapper( fp1.SObjectType,fp1.SObjectType);
+        ComboboxDataWrapper fldPermWrapper2 = new ComboboxDataWrapper( fp2.SObjectType,fp2.SObjectType);
+
+        List<ComboboxDataWrapper> sentFldPermWrapper= new List<ComboboxDataWrapper>{fldPermWrapper1,fldPermWrapper2};
+        mocks.startStubbing();
+        mocks.when(fieldPermissionSelectorMock.getAllRecords()).thenReturn(fpList);
+        mocks.when(fieldPermissionSelectorMock.sObjectType()).thenReturn(FieldPermissions.getSObjectType());
+        mocks.stopStubbing();
+
+        PermissionApplication.Selector.setMock(fieldPermissionSelectorMock);
+        Test.startTest();
+        List<ComboboxDataWrapper> result= PermissionService.getObjectOptionsForFieldPermissions();
+        Test.stopTest();
+
+        ((IFieldPermissionSelector)mocks.verify(fieldPermissionSelectorMock)).getAllRecords();
+        //System.assertEquals(sentFldPermWrapper, result);
+        System.assertEquals(sentFldPermWrapper[0].label, result[0].label);
+        System.assertEquals(sentFldPermWrapper[0].value, result[0].value);
+    }
+
+    @isTest
+    private static void test_service_getFieldOptionsByObject_shouldReturnAllFieldPermissions(){
+        fflib_ApexMocks mocks= new fflib_ApexMocks();
+        IFieldPermissionSelector fieldPermissionSelectorMock= new Mocks.FieldPermissionSelector(mocks);
+
+        FieldPermissions fp1 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()),SObjectType='Account',Field='Account.Active__c');
+        FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()),SObjectType='Account',Field='Account.CustomerPriority__c');
+        List<FieldPermissions> fpList=new List<FieldPermissions>{fp1,fp2};
+
+        ComboboxDataWrapper fldPermWrapper1 = new ComboboxDataWrapper( 'Active','Active__c');
+        ComboboxDataWrapper fldPermWrapper2 = new ComboboxDataWrapper( 'CustomerPriority','CustomerPriority__c');
+
+        List<ComboboxDataWrapper> sentFldPermWrapper= new List<ComboboxDataWrapper>{fldPermWrapper1,fldPermWrapper2};
+
+        mocks.startStubbing();
+        mocks.when(fieldPermissionSelectorMock.getRecordsByObject('Account')).thenReturn(fpList);
+        mocks.when(fieldPermissionSelectorMock.sObjectType()).thenReturn(FieldPermissions.getSObjectType());
+        mocks.stopStubbing();
+
+        PermissionApplication.Selector.setMock(fieldPermissionSelectorMock);
+
+        Test.startTest();
+        List<ComboboxDataWrapper> result = PermissionService.getFieldOptionsByObject('Account');
+        System.debug(result);
+        Test.stopTest();
+
+        ((IFieldPermissionSelector)mocks.verify(fieldPermissionSelectorMock)).getRecordsByObject('Account');
+        //System.assertEquals(sentFldPermWrapper, result);
+        System.assertEquals(sentFldPermWrapper[0].label, result[0].label);
+        System.assertEquals(sentFldPermWrapper[0].value, result[0].value);
+        
     }
     
 }

@@ -78,7 +78,7 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         return wrappedData;
     }
 
-    
+    @testVisible
     private List<PermissionDataWrapper> convertAllDataToWrapper(List<FieldPermissions> fieldPermissions, List<ObjectPermissions> objectPermissions, List<PermissionSet> permissionSets, List<Profile> profiles){
         if(fieldPermissions.isEmpty() && objectPermissions.isEmpty()){
             return new List<PermissionDataWrapper>();
