@@ -9,19 +9,23 @@ td[rowspan] {
 	text-align: left;
 }
 
+.slds-scrollable{
+    height: 350px !important;  
+}  
+
 /* tbody {
     display: block;
     height: 500px;
     overflow: auto;
 }
 thead, tbody tr {
-    display: table-row;
-    table-layout: fixed; even columns width , fix width of table too
-} */
-/* thead {
+    display: table;
+    table-layout: fixed;
+}
+thead {
     width: calc( 100% - 1em ) scrollbar is average 1em/16px width, remove it from thead width
-}*/
+}
 
-/* table {
+table {
     width: 400px;
 } */
