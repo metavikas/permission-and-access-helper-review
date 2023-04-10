@@ -55,6 +55,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
         try {
             this.isLoading = true;
             this.allData = await getAllPermissionData();
+            console.log(JSON.stringify(this.allData));
         } catch (e) {
             console.log("Error found in connected callback as " + e);
         }
