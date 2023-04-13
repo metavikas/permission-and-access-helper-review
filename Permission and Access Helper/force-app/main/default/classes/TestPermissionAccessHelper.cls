@@ -76,7 +76,8 @@ public with sharing class TestPermissionAccessHelper {
 
         // permission
         PermissionSet ps1 = new PermissionSet(Id = '0PS2w000009MPBeGAO', Name='B2BBuyerManager',label = 'Buyer Manager');
-        PermissionSet ps2 = [SELECT Id, Name, Label FROM PermissionSet WHERE Profile.Name ='Standard User'];
+        PermissionSet ps2 = [SELECT Id, Name, Label, IsOwnedByProfile FROM PermissionSet WHERE Profile.Name ='Standard User'];
+        System.debug(ps2);
         List<PermissionSet> permissionSetList= new List<PermissionSet>{ps1, ps2};
 
 

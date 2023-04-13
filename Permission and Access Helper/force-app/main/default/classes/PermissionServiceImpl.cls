@@ -78,7 +78,7 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         return wrappedData;
     }
 
-    @testVisible
+   
     private List<PermissionDataWrapper> convertAllDataToWrapper(List<FieldPermissions> fieldPermissions, List<ObjectPermissions> objectPermissions, List<PermissionSet> permissionSets, List<Profile> profiles){
         if(fieldPermissions.isEmpty() && objectPermissions.isEmpty()){
             return new List<PermissionDataWrapper>();
@@ -90,7 +90,9 @@ public with sharing class PermissionServiceImpl implements IPermissionService{
         List<PermissionDataWrapper> wrappedData = new List<PermissionDataWrapper>();
         Map<String, List<ObjectPermissions>> objectPermissionByProfile= new Map<String, List<ObjectPermissions>>();
         Map<String, List<ObjectPermissions>> objectPermissionByPermissionSet = new Map<String, List<ObjectPermissions>>();
+        System.debug(objectPermissions);
         for(ObjectPermissions opData : objectPermissions){
+            System.debug(opData.Parent.IsOwnedByProfile);
             if(opData.Parent.IsOwnedByProfile){
                 if(objectPermissionByProfile.containsKey(opData.Parent.ProfileId)){
                     List<ObjectPermissions> nameList = objectPermissionByProfile.get(opData.Parent.ProfileId);
