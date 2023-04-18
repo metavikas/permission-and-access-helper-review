@@ -7,11 +7,10 @@
                 onchange={handleFilterTypeChange}>
             </lightning-combobox>
             <template if:true={isFilterTypeSelected}>
-                <lightning-combobox class="slds-var-m-horizontal_small slds-size_1-of-4" name="Filter"
-                    label="Select Value To Filter On" placeholder={placeholderForDataFilter}
-                    options={optionsForDataFilter} value={selectedDataValue} onchange={handleDataFilterChange}
-                    disabled={dataComboboxDisabled}>
-                </lightning-combobox>
+                <c-combobox-autocomplete options={optionsForDataFilter} classes="slds-var-m-horizontal_small"
+                    label="Select Value To Filter On" placeholder={placeholderForDataFilter} value={selectedDataLabel}
+                    onselectoption={handleDataFilterChange}>
+                </c-combobox-autocomplete>
             </template>
             <template if:true={isFilterTypeField}>
                 <div class="slds-size_1-of-4">

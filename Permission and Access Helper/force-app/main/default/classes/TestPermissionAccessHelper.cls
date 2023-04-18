@@ -62,45 +62,39 @@ public with sharing class TestPermissionAccessHelper {
 
     @isTest 
     private static void testGetAllPermissoinData_shouldReturnAllData(){
+        // mocks
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IProfileSelector profileSelectorMock = new Mocks.ProfileSelector(mocks);
         IPermissionSetSelector permissionSetSelectorMock = new Mocks.PermissionSetSelector(mocks);
         IObjectPermissionSelector objectPermissionSelectorMock =new Mocks.ObjectPermissionSelector(mocks);
         IFieldPermissionSelector fieldPermissionSelectorMock= new Mocks.FieldPermissionSelector(mocks);
+
         // profile
-        // Profile p1 = new Profile(Id = fflib_IDGenerator.generate(Profile.SObjectType), Name = 'Test');
-        // Profile p2 = new Profile(Id = fflib_IDGenerator.generate(Profile.SObjectType), Name = 'Test');
-        // Profile p1 = new Profile(Id = '00e2w000005SOrWAAW', Name = 'Analytics Cloud Integration User');
-        // Profile p2 = new Profile(Id = '00e2w000005SOrcAAG', Name = 'Analytics Cloud Security User');
         List<Profile> profileList= [SELECT Id, Name FROM Profile WHERE Name ='Standard User'];
 
-        // permission
-        PermissionSet ps1 = new PermissionSet(Id = '0PS2w000009MPBeGAO', Name='B2BBuyerManager',label = 'Buyer Manager');
+        // permissionSet and permission set of profile
+        PermissionSet ps1 = [SELECT Id, Name, Label, IsOwnedByProfile FROM PermissionSet WHERE Name ='B2BBuyerManager'];
         PermissionSet ps2 = [SELECT Id, Name, Label, IsOwnedByProfile FROM PermissionSet WHERE Profile.Name ='Standard User'];
-        System.debug(ps2);
         List<PermissionSet> permissionSetList= new List<PermissionSet>{ps1, ps2};
 
 
         // fieldPermission
-        // FieldPermissions fp1 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()));
-        // FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()));
-        FieldPermissions fp1 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.Active__c', PermissionsEdit=true, PermissionsRead=true);
-
-        FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.CustomerPriority__c', PermissionsEdit=true, PermissionsRead=true);
-        List<FieldPermissions> fpList=new List<FieldPermissions>{fp1,fp2};
+        FieldPermissions fp1 = new FieldPermissions(ParentId = ps2.Id, SobjectType = 'Account', Field = 'Account.Active__c', PermissionsEdit = true, PermissionsRead = true);
+        FieldPermissions fp2 = new FieldPermissions(ParentId = ps2.Id, SobjectType = 'Account', Field = 'Account.CustomerPriority__c', PermissionsEdit = true, PermissionsRead = false);
+        FieldPermissions fp3 = new FieldPermissions(ParentId = ps2.Id, SobjectType = 'Account', Field = 'Account.Active__c', PermissionsEdit = true, PermissionsRead = true);
+        FieldPermissions fp4 = new FieldPermissions(ParentId = ps2.Id, SobjectType = 'Account', Field = 'Account.CustomerPriority__c', PermissionsEdit = false, PermissionsRead = true);
+        List<FieldPermissions> fpList=new List<FieldPermissions>{fp1, fp2, fp3, fp4};
+        System.debug(permissionSetList);
+        insert fpList;
 
         //ObjectPermission
-        // ObjectPermissions op1=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()));
-        // ObjectPermissions op2=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()));
-        ObjectPermissions op1 = new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),ParentId=ps2.Id,SObjectType='WorkOrder',PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
+        ObjectPermissions op1 = new ObjectPermissions(ParentId = ps1.Id, SObjectType='WorkOrder', PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
+        ObjectPermissions op2 = new ObjectPermissions(ParentId = ps1.Id, SObjectType='StreamingChannel', PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
+        ObjectPermissions op3 = new ObjectPermissions(ParentId = ps2.Id, SObjectType='WorkOrder', PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
+        ObjectPermissions op4 = new ObjectPermissions(ParentId = ps2.Id, SObjectType='StreamingChannel', PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
+        List<ObjectPermissions> opList=new List<ObjectPermissions>{op1, op2, op3, op4};
+        insert opList;
 
-        ObjectPermissions op2 = new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),ParentId=ps2.Id,SObjectType='StreamingChannel',PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
-
-        ObjectPermissions op3 = new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),ParentId=ps1.Id,SObjectType='PrivacyConsent',PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
-        List<ObjectPermissions> opList=new List<ObjectPermissions>{op1,op2,op3};
-
-
-        //List<PermissionDataWrapper> resultedList=
         mocks.startStubbing();
         mocks.when(profileSelectorMock.getAllRecords()).thenReturn(profileList);
         mocks.when(profileSelectorMock.sObjectType()).thenReturn(Profile.sObjectType);
@@ -111,10 +105,12 @@ public with sharing class TestPermissionAccessHelper {
         mocks.when(fieldPermissionSelectorMock.getAllRecords()).thenReturn(fpList);
         mocks.when(fieldPermissionSelectorMock.sObjectType()).thenReturn(FieldPermissions.getSObjectType());
         mocks.stopStubbing();
+        
         PermissionApplication.Selector.setMock(profileSelectorMock);
         PermissionApplication.Selector.setMock(permissionSetSelectorMock);
         PermissionApplication.Selector.setMock(objectPermissionSelectorMock);
         PermissionApplication.Selector.setMock(fieldPermissionSelectorMock);
+
         Test.startTest();
         List<PermissionDataWrapper> res= PermissionService.getAllPermissionData();
         System.debug(res);
@@ -123,8 +119,7 @@ public with sharing class TestPermissionAccessHelper {
         ((IProfileSelector)mocks.verify(profileSelectorMock)).getAllRecords();
         ((IPermissionSetSelector)mocks.verify(permissionSetSelectorMock)).getAllRecords();
         ((IObjectPermissionSelector)mocks.verify(objectPermissionSelectorMock)).getAllRecords();
-        ((IFieldPermissionSelector)mocks.verify(fieldPermissionSelectorMock)).getAllRecords();
-        
+        ((IFieldPermissionSelector)mocks.verify(fieldPermissionSelectorMock)).getAllRecords();      
     }
 
     @isTest

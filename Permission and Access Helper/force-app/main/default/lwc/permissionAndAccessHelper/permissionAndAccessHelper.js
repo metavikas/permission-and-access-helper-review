@@ -20,6 +20,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
     isLoading = true;
     selectedFilterType = 'All';
     selectedDataValue = '';
+    selectedDataLabel;
     fieldComboboxDisabled = false;
     dataComboboxDisabled = false;
     selectedField = '';
@@ -64,6 +65,8 @@ export default class PermissionAndAccessHelper extends LightningElement {
     }
 
     async handleFilterTypeChange(event) {
+        this.selectedDataLabel = '';
+        this.selectedDataValue = '';
         this.isComboboxLoading = true;
         await new Promise((resolve) => {
             setTimeout(() => {
@@ -131,6 +134,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
     handleDataFilterChange(event) {
         try {
             this.selectedDataValue = event.detail.value;
+            this.selectedDataLabel = event.detail.label;
             if (this.selectedFilterType == 'Profile' || this.selectedFilterType == 'Permission Set') {
                 this.visibleData = this.convertData(this.filterPermissionSetAndProfile(this.selectedFilterType, this.selectedDataValue));
             }

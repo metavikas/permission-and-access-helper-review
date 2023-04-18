@@ -26,6 +26,7 @@ public with sharing class ObjectPermissionSelector extends fflib_SObjectSelector
         return (List<ObjectPermissions>) Database.query(
             newQueryFactory()
             .selectFields(new List<String>{'Parent.ProfileId', 'Parent.IsOwnedByProfile'})
+            .setLimit(5)
             .toSOQL()
         );
     }
