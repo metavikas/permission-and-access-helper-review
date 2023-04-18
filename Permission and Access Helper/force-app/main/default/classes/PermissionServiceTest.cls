@@ -1,5 +1,5 @@
 @isTest
-public with sharing class PermissionAndAccessHelperServiceTest {
+private with sharing class PermissionServiceTest {
     @isTest
     private static void testGetAllProfiles_shouldReturnAllProfiles(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -92,6 +92,11 @@ public with sharing class PermissionAndAccessHelperServiceTest {
         // ObjectPermissions op2=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()));
         //ObjectPermissions op1 = new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),ParentId=ps2.Id,SObjectType='WorkOrder',PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
         ObjectPermissions op1= [SELECT Id, ParentId, SobjectType,Parent.IsOwnedByProfile,Parent.ProfileId, PermissionsCreate, PermissionsRead, PermissionsEdit, PermissionsDelete, PermissionsViewAllRecords, PermissionsModifyAllRecords FROM ObjectPermissions WHERE SobjectType='WorkOrder' AND ParentId=:ps2.Id ];
+
+        ObjectPermissions op2 = new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),ParentId=ps2.Id,SObjectType='StreamingChannel',PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
+
+        ObjectPermissions op3 = new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),ParentId=ps1.Id,SObjectType='PrivacyConsent',PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
+        List<ObjectPermissions> opList=new List<ObjectPermissions>{op1,op2,op3};
 
         mocks.startStubbing();
         mocks.when(profileSelectorMock.getAllRecords()).thenReturn(profileList);
