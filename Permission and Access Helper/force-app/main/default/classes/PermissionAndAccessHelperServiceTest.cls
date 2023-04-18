@@ -85,7 +85,7 @@ public with sharing class PermissionAndAccessHelperServiceTest {
         //FieldPermissions fp1 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.Active__c', PermissionsEdit=true, PermissionsRead=true);
 		FieldPermissions fp1=[SELECT SobjectType, Field, Id, ParentId,Parent.IsOwnedByProfile,Parent.ProfileId, PermissionsEdit, PermissionsRead FROM FieldPermissions WHERE Field='Account.Active__c' AND ParentId=:ps2.Id];
         FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.CustomerPriority__c', PermissionsEdit=true, PermissionsRead=true);
-        List<FieldPermissions> fpList=new List<FieldPermissions>{fp1,fp2, fp3};
+        List<FieldPermissions> fpList=new List<FieldPermissions>{fp1,fp2};
 
         //ObjectPermission
         // ObjectPermissions op1=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()));
