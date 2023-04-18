@@ -1,5 +1,5 @@
 @isTest
-public with sharing class TestPermissionAccessHelper {
+public with sharing class PermissionAndAccessHelperServiceTest {
     @isTest
     private static void testGetAllProfiles_shouldReturnAllProfiles(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -72,28 +72,26 @@ public with sharing class TestPermissionAccessHelper {
         // profile
         List<Profile> profileList= [SELECT Id, Name FROM Profile WHERE Name ='Standard User'];
 
-        // permissionSet and permission set of profile
-        PermissionSet ps1 = [SELECT Id, Name, Label, IsOwnedByProfile FROM PermissionSet WHERE Name ='B2BBuyerManager'];
-        PermissionSet ps2 = [SELECT Id, Name, Label, IsOwnedByProfile FROM PermissionSet WHERE Profile.Name ='Standard User'];
+        // permission
+        PermissionSet ps1 = new PermissionSet(Id = '0PS2w000009MPBeGAO', Name='B2BBuyerManager',label = 'Buyer Manager');
+        PermissionSet ps2 = [SELECT Id, Name, Label,IsOwnedByProfile,ProfileId FROM PermissionSet WHERE Profile.Name ='Standard User'];
+        System.debug('This is ps2-> '+ps2);
         List<PermissionSet> permissionSetList= new List<PermissionSet>{ps1, ps2};
 
 
         // fieldPermission
-        FieldPermissions fp1 = new FieldPermissions(ParentId = ps2.Id, SobjectType = 'Account', Field = 'Account.Active__c', PermissionsEdit = true, PermissionsRead = true);
-        FieldPermissions fp2 = new FieldPermissions(ParentId = ps2.Id, SobjectType = 'Account', Field = 'Account.CustomerPriority__c', PermissionsEdit = true, PermissionsRead = false);
-        FieldPermissions fp3 = new FieldPermissions(ParentId = ps2.Id, SobjectType = 'Account', Field = 'Account.Active__c', PermissionsEdit = true, PermissionsRead = true);
-        FieldPermissions fp4 = new FieldPermissions(ParentId = ps2.Id, SobjectType = 'Account', Field = 'Account.CustomerPriority__c', PermissionsEdit = false, PermissionsRead = true);
-        List<FieldPermissions> fpList=new List<FieldPermissions>{fp1, fp2, fp3, fp4};
-        System.debug(permissionSetList);
-        insert fpList;
+        // FieldPermissions fp1 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()));
+        // FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()));
+        // FieldPermissions fp3 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.Active__c', PermissionsEdit=true, PermissionsRead=true, Parent = ps2);
+		FieldPermissions fp1 = [SELECT SobjectType, Field, Id, ParentId,Parent.IsOwnedByProfile,Parent.ProfileId, PermissionsEdit, PermissionsRead FROM FieldPermissions WHERE Field='Account.Active__c' AND ParentId=:ps2.Id];
+        FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.CustomerPriority__c', PermissionsEdit=true, PermissionsRead=true);
+        List<FieldPermissions> fpList=new List<FieldPermissions>{fp1,fp2, fp3};
 
         //ObjectPermission
-        ObjectPermissions op1 = new ObjectPermissions(ParentId = ps1.Id, SObjectType='WorkOrder', PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
-        ObjectPermissions op2 = new ObjectPermissions(ParentId = ps1.Id, SObjectType='StreamingChannel', PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
-        ObjectPermissions op3 = new ObjectPermissions(ParentId = ps2.Id, SObjectType='WorkOrder', PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
-        ObjectPermissions op4 = new ObjectPermissions(ParentId = ps2.Id, SObjectType='StreamingChannel', PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
-        List<ObjectPermissions> opList=new List<ObjectPermissions>{op1, op2, op3, op4};
-        insert opList;
+        // ObjectPermissions op1=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()));
+        // ObjectPermissions op2=new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()));
+        //ObjectPermissions op1 = new ObjectPermissions(Id=fflib_IDGenerator.generate(ObjectPermissions.getSObjectType()),ParentId=ps2.Id,SObjectType='WorkOrder',PermissionsCreate=true,PermissionsRead=true,PermissionsEdit=true,PermissionsDelete=true,PermissionsViewAllRecords=true,PermissionsModifyAllRecords=true);
+        ObjectPermissions op1= [SELECT Id, ParentId, SobjectType,Parent.IsOwnedByProfile,Parent.ProfileId, PermissionsCreate, PermissionsRead, PermissionsEdit, PermissionsDelete, PermissionsViewAllRecords, PermissionsModifyAllRecords FROM ObjectPermissions WHERE SobjectType='WorkOrder' AND ParentId=:ps2.Id ];
 
         mocks.startStubbing();
         mocks.when(profileSelectorMock.getAllRecords()).thenReturn(profileList);
@@ -212,5 +210,4 @@ public with sharing class TestPermissionAccessHelper {
         // System.assertEquals(sentFldPermWrapper[0].value, result[0].value);
         
     }
-    
 }
