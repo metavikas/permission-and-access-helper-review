@@ -1,5 +1,5 @@
-@isTest 
-public with sharing class TestPermissionController {
+@isTest
+public with sharing class PermissionAndAccessHelperControllerTest {
     @isTest
     private static void getProfile_shouldReturnAllProfile(){
 
@@ -169,5 +169,4 @@ public with sharing class TestPermissionController {
         system.assertEquals(result, sentFldPermWrapper);
 
     }
-
 }
