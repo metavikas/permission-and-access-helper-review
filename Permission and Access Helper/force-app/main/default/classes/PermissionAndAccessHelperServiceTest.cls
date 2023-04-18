@@ -82,8 +82,13 @@ public with sharing class PermissionAndAccessHelperServiceTest {
         // fieldPermission
         // FieldPermissions fp1 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()));
         // FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()));
+<<<<<<< HEAD
         // FieldPermissions fp3 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.Active__c', PermissionsEdit=true, PermissionsRead=true, Parent = ps2);
 		FieldPermissions fp1 = [SELECT SobjectType, Field, Id, ParentId,Parent.IsOwnedByProfile,Parent.ProfileId, PermissionsEdit, PermissionsRead FROM FieldPermissions WHERE Field='Account.Active__c' AND ParentId=:ps2.Id];
+=======
+        //FieldPermissions fp1 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.Active__c', PermissionsEdit=true, PermissionsRead=true);
+		FieldPermissions fp1=[SELECT SobjectType, Field, Id, ParentId,Parent.IsOwnedByProfile,Parent.ProfileId, PermissionsEdit, PermissionsRead FROM FieldPermissions WHERE Field='Account.Active__c' AND ParentId=:ps2.Id];
+>>>>>>> a643323085023fab563103345cbe77a4d0f4f72e
         FieldPermissions fp2 = new FieldPermissions(Id=fflib_IDGenerator.generate(FieldPermissions.getSObjectType()), ParentId=ps2.Id, SobjectType='Account', Field='Account.CustomerPriority__c', PermissionsEdit=true, PermissionsRead=true);
         List<FieldPermissions> fpList=new List<FieldPermissions>{fp1,fp2, fp3};
 
