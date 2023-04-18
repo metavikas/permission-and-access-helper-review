@@ -1,5 +1,5 @@
 @isTest
-public with sharing class PermissionAndAccessHelperControllerTest {
+private with sharing class PermissionControllerTest {
     @isTest
     private static void getProfile_shouldReturnAllProfile(){
 
