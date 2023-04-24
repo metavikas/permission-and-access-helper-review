@@ -21,7 +21,6 @@ public class FieldPermissionsSelector extends fflib_SObjectSelector implements I
         return (List<FieldPermissions>) Database.query(
             newQueryFactory()
             .selectFields(new List<String>{'Parent.ProfileId', 'Parent.IsOwnedByProfile'})
-            .setLimit(5)
             .toSOQL());
     }
     public List<FieldPermissions> getRecordsByObject(String objectName){

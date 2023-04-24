@@ -6,11 +6,20 @@ export default class ComboboxAutocomplete extends LightningElement {
     @api label;
     @api placeholder;
     @api value;
-    @api options;
+    @api 
+    get options(){
+        return this.storedAllOptions;
+    }
+
+    set options(data){
+        this.filteredOptions = data;
+        this.storedAllOptions = data;
+    }
     
     @track isFocussed = false;
     @track isOpen = false;
 
+    storedAllOptions = [];
     filteredOptions = [];
     domElement;
     
@@ -84,7 +93,7 @@ export default class ComboboxAutocomplete extends LightningElement {
             //Is the clicked element within the dropdown 
             if (domElement && !domElement.contains(event.target)) {
                 this.isOpen = false;
-            }
+            }   
         }
     }
 
@@ -95,5 +104,6 @@ export default class ComboboxAutocomplete extends LightningElement {
 
     handleBlur() {
         this.isFocussed = false;
+        this.isOpen = false;
     }
 }

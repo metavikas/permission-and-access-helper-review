@@ -24,6 +24,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
     fieldComboboxDisabled = false;
     dataComboboxDisabled = false;
     selectedField = '';
+    selectedFieldLabel = '';
     optionsForDataFilter = [];
     optionsForFieldFilter = [];
     placeholderForDataFilter = '';
@@ -143,6 +144,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
             }
             if (this.selectedFilterType == 'Field') {
                 this.isObjectSelected = true;
+                this.selectedFieldLabel = '';
                 this.selectedField = '';
                 this.fieldComboboxDisabled = true;
                 getFieldOptionsByObject({ objectName: this.selectedDataValue })
@@ -162,6 +164,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
     handleFieldChange(event) {
         try {
             this.selectedField = event.detail.value;
+            this.selectedFieldLabel = event.detail.label;
             this.visibleData = this.convertData(this.filterFields(this.selectedDataValue, this.selectedField));
         } catch (e) {
             console.log("Error is such that ", e);
