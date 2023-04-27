@@ -6,23 +6,23 @@ export default class ComboboxAutocomplete extends LightningElement {
     @api label;
     @api placeholder;
     @api value;
-    @api 
-    get options(){
+    @api
+    get options() {
         return this.storedAllOptions;
     }
 
-    set options(data){
+    set options(data) {
         this.filteredOptions = data;
         this.storedAllOptions = data;
     }
-    
+
     @track isFocussed = false;
     @track isOpen = false;
 
     storedAllOptions = [];
     filteredOptions = [];
     domElement;
-    
+
     _handleOutsideClick;
 
     constructor() {
@@ -41,7 +41,7 @@ export default class ComboboxAutocomplete extends LightningElement {
 
     filterOptions(event) {
         const filterText = event.detail.value;
-        if(filterText == ''){
+        if (filterText === '') {
             this.filteredOptions = this.options;
             return;
         }
@@ -51,14 +51,15 @@ export default class ComboboxAutocomplete extends LightningElement {
     }
 
     handleSelectOption(event) {
+        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
         this.value = event.currentTarget.dataset.label;
         const custEvent = new CustomEvent(
             'selectoption', {
-                detail: {
-                    value: event.currentTarget.dataset.value,
-                    label: event.currentTarget.dataset.label
-                }
+            detail: {
+                value: event.currentTarget.dataset.value,
+                label: event.currentTarget.dataset.label
             }
+        }
         );
         this.dispatchEvent(custEvent);
 
@@ -72,9 +73,9 @@ export default class ComboboxAutocomplete extends LightningElement {
     }
 
     get dropdownClasses() {
-        
+
         let dropdownClasses = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
-        
+
         // Show dropdown list on focus
         if (this.isOpen) {
             dropdownClasses += ' slds-is-open';
@@ -85,7 +86,7 @@ export default class ComboboxAutocomplete extends LightningElement {
 
     handleOutsideClick(event) {
 
-        if ((!this.isFocussed) && (this.isOpen)) { 
+        if ((!this.isFocussed) && (this.isOpen)) {
 
             //Fetch the dropdown DOM node
             let domElement = this.template.querySelector('div[data-id="resultBox"]');
@@ -93,7 +94,7 @@ export default class ComboboxAutocomplete extends LightningElement {
             //Is the clicked element within the dropdown 
             if (domElement && !domElement.contains(event.target)) {
                 this.isOpen = false;
-            }   
+            }
         }
     }
 
