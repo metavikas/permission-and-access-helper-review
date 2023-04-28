@@ -105,6 +105,5 @@ export default class ComboboxAutocomplete extends LightningElement {
 
     handleBlur() {
         this.isFocussed = false;
-        this.isOpen = false;
     }
 }
