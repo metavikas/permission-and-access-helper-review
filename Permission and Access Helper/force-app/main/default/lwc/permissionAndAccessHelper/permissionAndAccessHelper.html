@@ -28,7 +28,9 @@
                 <template if:true={isLoading}>
                     <lightning-spinner size="large"></lightning-spinner>
                 </template>
+                 <!-- <div class="slds-scrollable_y" style="height:19rem;width:50rem"></div> -->
                 <c-table-to-render-data if:false={isLoading} render-data={dataToRender}></c-table-to-render-data>
+            
             </div>
         </div>
     </lightning-card>

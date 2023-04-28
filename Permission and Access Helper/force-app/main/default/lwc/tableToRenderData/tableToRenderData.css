@@ -1,17 +1,19 @@
-table,
+  table,
 th,
 td {
 	border: 0.5px solid #e8e8e8;
-}
+} 
 
-td[rowspan] {
+
+ td[rowspan] {
 	vertical-align: top;
 	text-align: left;
-}
-
+} 
+/*
 .slds-scrollable{
     height: 350px !important;  
-}  
+}   */
+
 
 /* tbody {
     display: block;

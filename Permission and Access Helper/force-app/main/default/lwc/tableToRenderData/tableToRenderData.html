@@ -1,22 +1,24 @@
 <template>
     <div class="slds-var-p-horizontal_small">
-        <table class="slds-table slds-table_fixed-layout">
+     <!-- class="slds-table slds-table_fixed-layout" -->
+     <div class="slds-scrollable_y" style="height:19rem;">
+        <table  class="slds-table slds-table_fixed-layout slds-table slds-table_bordered slds-table--header-fixed" >
             <thead>
                 <tr class="slds-line-height_reset">
                     <th scope="col">
-                        <div class="slds-truncate" title="Type">Type</div>
+                        <div class="slds-truncate slds-cell-fixed" title="Type">Type</div>
                     </th>
                     <th scope="col">
-                        <div class="slds-truncate" title="Name">Name</div>
+                        <div class="slds-truncate slds-cell-fixed" title="Name">Name</div>
                     </th>
                     <th scope="col">
-                        <div class="slds-truncate" title="Permission Type">Permission Type</div>
+                        <div class="slds-truncate slds-cell-fixed" title="Permission Type">Permission Type</div>
                     </th>
                     <th scope="col">
-                        <div class="slds-truncate" title="Value">Value</div>
+                        <div class="slds-truncate slds-cell-fixed" title="Value">Value</div>
                     </th>
                     <th scope="col">
-                        <div class="slds-truncate" title="Access">Access</div>
+                        <div class="slds-truncate slds-cell-fixed" title="Access">Access</div>
                     </th>
                 </tr>
             </thead>
@@ -44,6 +46,7 @@
                                             <div class="slds-truncate">{permissionTypeData.permissionType}</div>
                                         </td>
                                     </tr>
+                                    
                                     <template for:each={permissionTypeData.permissions} for:item="permissions">
                                         <tr key={permissions.key}>
                                             <td data-label="permissions.value" title={permissions.value}>
@@ -61,5 +64,6 @@
                 <!-- </div> -->
             </tbody>
         </table>
+    </div>
     </div>
 </template>
