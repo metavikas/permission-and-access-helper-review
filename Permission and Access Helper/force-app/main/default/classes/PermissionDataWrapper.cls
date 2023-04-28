@@ -1,5 +1,11 @@
-public with sharing class PermissionDataWrapper {
-
+/**
+ * Copyright (c) - Metacube Software Private Limited
+ * All rights reserved
+ *
+ * Date - April 27, 2023
+ *
+ */
+public class PermissionDataWrapper {
     @AuraEnabled
     public String type;
     @AuraEnabled
@@ -8,9 +14,8 @@ public with sharing class PermissionDataWrapper {
     public List<PermissionSetProfileData> permissionSetProfileData;
     @AuraEnabled
     public Integer rowspan;
-    
 
-    public class PermissionSetProfileData{
+    public class PermissionSetProfileData {
         @AuraEnabled
         public String name;
         @AuraEnabled
@@ -23,7 +28,7 @@ public with sharing class PermissionDataWrapper {
         public Integer rowspan;
     }
 
-    public class PermissionTypeData{
+    public class PermissionTypeData {
         @AuraEnabled
         public String permissionType;
         @AuraEnabled
@@ -32,8 +37,8 @@ public with sharing class PermissionDataWrapper {
         public List<Permission> permissions;
         @AuraEnabled
         public Integer rowspan;
-        
-        public PermissionTypeData(String permissionType, List<Permission> permissions, Integer rowspan, Integer key){
+
+        public PermissionTypeData(String permissionType, List<Permission> permissions, Integer rowspan, Integer key) {
             this.permissionType = permissionType;
             this.permissions = permissions;
             this.rowspan = rowspan;
@@ -41,7 +46,7 @@ public with sharing class PermissionDataWrapper {
         }
     }
 
-    public class Permission{
+    public class Permission {
         @AuraEnabled
         public String value;
         @AuraEnabled
@@ -49,7 +54,7 @@ public with sharing class PermissionDataWrapper {
         @AuraEnabled
         public String access;
 
-        public Permission(String value, String access, Integer key){
+        public Permission(String value, String access, Integer key) {
             this.value = value;
             this.access = access;
             this.key = key;

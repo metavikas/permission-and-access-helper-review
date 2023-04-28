@@ -1,28 +1,28 @@
-public class ProfileSelector extends fflib_SObjectSelector implements IProfileSelector {
-    
+/**
+ * Copyright (c) - Metacube Software Private Limited
+ * All rights reserved
+ *
+ * Date - April 27, 2023
+ *
+ */
+public without sharing class ProfileSelector extends fflib_SObjectSelector implements IProfileSelector {
     public List<Schema.SObjectField> getSObjectFieldList() {
-        return new List<Schema.SObjectField> {
-            Profile.Id,
-            Profile.Name};
+        return new List<Schema.SObjectField>{ Profile.Id, Profile.Name };
     }
-    
+
     public Schema.SObjectType getSObjectType() {
         return Profile.sObjectType;
     }
-    
+
     public override String getOrderBy() {
         return 'Name ASC';
     }
 
-    public List<Profile> getAllRecords(){
-        return(List<Profile>) Database.query(
-            newQueryFactory()
-            .toSOQL());
+    public List<Profile> getAllRecords() {
+        return (List<Profile>) Database.query(newQueryFactory().toSOQL());
     }
 
-    public static IProfileSelector newInstance()
-    {
+    public static IProfileSelector newInstance() {
         return (IProfileSelector) PermissionApplication.Selector.newInstance(Profile.SObjectType);
     }
-    
 }

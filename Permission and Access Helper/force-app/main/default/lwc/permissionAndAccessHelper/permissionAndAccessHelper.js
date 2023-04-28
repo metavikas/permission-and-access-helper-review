@@ -1,7 +1,7 @@
 import { LightningElement } from 'lwc';
 import getAllPermissionData from '@salesforce/apex/PermissionController.getAllPermissionData';
-import getProfile from '@salesforce/apex/PermissionController.getProfile';
-import getPermissionSet from '@salesforce/apex/PermissionController.getPermissionSet';
+import getProfiles from '@salesforce/apex/PermissionController.getProfiles';
+import getPermissionSets from '@salesforce/apex/PermissionController.getPermissionSets';
 import getObjectOptionsForObjectPermissions from '@salesforce/apex/PermissionController.getObjectOptionsForObjectPermissions';
 import getObjectOptionsForFieldPermissions from '@salesforce/apex/PermissionController.getObjectOptionsForFieldPermissions';
 import getFieldOptionsByObject from '@salesforce/apex/PermissionController.getFieldOptionsByObject';
@@ -40,17 +40,15 @@ export default class PermissionAndAccessHelper extends LightningElement {
     get isFilterTypeSelected() {
         if (this.selectedFilterType === 'All') {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     get isFilterTypeField() {
-        if (this.selectedFilterType == 'Field') {
+        if (this.selectedFilterType === 'Field') {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     async connectedCallback() {
@@ -70,20 +68,21 @@ export default class PermissionAndAccessHelper extends LightningElement {
         this.selectedDataValue = '';
         this.isComboboxLoading = true;
         await new Promise((resolve) => {
+            // eslint-disable-next-line @lwc/lwc/no-async-operation
             setTimeout(() => {
-              resolve();
+                resolve();
             }, 20);
-          });
+        });
         this.selectedFilterType = event.detail.value;
         this.visibleData = this.allData;
         this.dataComboboxDisabled = true;
-        if (this.selectedFilterType == 'All') {
+        if (this.selectedFilterType === 'All') {
             this.visibleData = this.allData;
             this.isComboboxLoading = false;
-        } else if (this.selectedFilterType == 'Profile') {
+        } else if (this.selectedFilterType === 'Profile') {
             this.placeholderForDataFilter = 'Select a Profile';
             this.selectedDataValue = '';
-            getProfile()
+            getProfiles()
                 .then((result) => {
                     this.optionsForDataFilter = result;
                     this.dataComboboxDisabled = false;
@@ -92,10 +91,10 @@ export default class PermissionAndAccessHelper extends LightningElement {
                 .catch((error) => {
                     console.log("Error encountered in getProfile() ", error);
                 })
-        } else if (this.selectedFilterType == 'Permission Set') {
+        } else if (this.selectedFilterType === 'Permission Set') {
             this.placeholderForDataFilter = 'Select a Permission Set';
             this.selectedDataValue = '';
-            getPermissionSet()
+            getPermissionSets()
                 .then((result) => {
                     this.optionsForDataFilter = result;
                     this.dataComboboxDisabled = false;
@@ -104,7 +103,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
                 .catch((error) => {
                     console.log("Error encountered in getPermissionSet() ", error);
                 })
-        } else if (this.selectedFilterType == 'Object') {
+        } else if (this.selectedFilterType === 'Object') {
             this.placeholderForDataFilter = 'Select an Object';
             this.selectedDataValue = '';
             getObjectOptionsForObjectPermissions()
@@ -116,7 +115,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
                 .catch((error) => {
                     console.log("Error encountered in getOjbectOptionsForObjectPermissions() ", error);
                 })
-        } else if (this.selectedFilterType == 'Field') {
+        } else if (this.selectedFilterType === 'Field') {
             this.placeholderForDataFilter = 'Select an Object';
             this.fieldComboboxDisabled = true;
             this.selectedDataValue = '';
@@ -136,13 +135,13 @@ export default class PermissionAndAccessHelper extends LightningElement {
         try {
             this.selectedDataValue = event.detail.value;
             this.selectedDataLabel = event.detail.label;
-            if (this.selectedFilterType == 'Profile' || this.selectedFilterType == 'Permission Set') {
+            if (this.selectedFilterType === 'Profile' || this.selectedFilterType === 'Permission Set') {
                 this.visibleData = this.convertData(this.filterPermissionSetAndProfile(this.selectedFilterType, this.selectedDataValue));
             }
-            if (this.selectedFilterType == 'Object') {
+            if (this.selectedFilterType === 'Object') {
                 this.visibleData = this.convertData(this.filterObjects(this.selectedDataValue));
             }
-            if (this.selectedFilterType == 'Field') {
+            if (this.selectedFilterType === 'Field') {
                 this.isObjectSelected = true;
                 this.selectedFieldLabel = '';
                 this.selectedField = '';
@@ -181,7 +180,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
         filterProfileData.forEach((typeEle) => {
             let permNameArray = typeEle.permissionSetProfileData;
             permNameArray = permNameArray.filter(item => {
-                if (item.id == idField) {
+                if (item.id === idField) {
                     return item;
                 }
             });
