@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement,track } from 'lwc';
 import getAllPermissionData from '@salesforce/apex/PermissionController.getAllPermissionData';
 import getProfiles from '@salesforce/apex/PermissionController.getProfiles';
 import getPermissionSets from '@salesforce/apex/PermissionController.getPermissionSets';
@@ -31,6 +31,13 @@ export default class PermissionAndAccessHelper extends LightningElement {
     isObjectSelected = false;
     allData = [];
     visibleData = [];
+
+
+    showFilterComponent = false;
+    showFilter(event) {
+        console.log("In the show search");
+        this.showFilterComponent = (this.showFilterComponent)? false:true;
+    }
 
 
     get dataToRender() {
@@ -278,6 +285,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
             });
             permEle.rowspan = permRowSpanValue + 1;
         });
+        console.log(alldata);
         return alldata;
     }
 }
