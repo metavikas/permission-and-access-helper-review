@@ -152,6 +152,7 @@ public class PermissionServiceImpl implements IPermissionService {
                     pspd.name = profile.Name;
                     pspd.key = keyForPermissionProfile++;
                     pspd.id = profile.Id;
+                    pspd.href='/'+profile.Id;
                     Integer pspdRowspan = 0;
                     List<PermissionDataWrapper.Permission> permissions = new List<PermissionDataWrapper.Permission>();
                     List<PermissionDataWrapper.PermissionTypeData> ptdList = new List<PermissionDataWrapper.PermissionTypeData>();
@@ -208,6 +209,7 @@ public class PermissionServiceImpl implements IPermissionService {
                     pspd.name = permissionSet.Label;
                     pspd.key = keyForPermissionProfile++;
                     pspd.id = permissionSet.Id;
+                    pspd.href='/'+permissionSet.Id;
                     Integer pspdRowspan = 0;
                     List<PermissionDataWrapper.Permission> permissions = new List<PermissionDataWrapper.Permission>();
                     List<PermissionDataWrapper.PermissionTypeData> ptdList = new List<PermissionDataWrapper.PermissionTypeData>();
@@ -255,6 +257,7 @@ public class PermissionServiceImpl implements IPermissionService {
     private PermissionDataWrapper.Permission getPermissionObject(SObject obj, Integer key) {
         String access = 'Read';
 
+
         if (obj.getSObjectType() == Schema.ObjectPermissions.getSObjectType()) {
             if ((boolean) obj.get('PermissionsEdit')) {
                 access += ', Edit';
@@ -271,6 +274,7 @@ public class PermissionServiceImpl implements IPermissionService {
             if ((boolean) obj.get('PermissionsModifyAllRecords')) {
                 access += ', Modify All Records';
             }
+           
             return new PermissionDataWrapper.Permission((String) obj.get('SobjectType'), access, key);
         } else if (obj.getSObjectType() == Schema.FieldPermissions.getSObjectType()) {
             if ((boolean) obj.get('PermissionsEdit')) {

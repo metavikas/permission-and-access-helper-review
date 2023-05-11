@@ -30,7 +30,8 @@ export default class PermissionAndAccessHelper extends LightningElement {
     placeholderForDataFilter = '';
     isObjectSelected = false;
     allData = [];
-    visibleData = [];
+    visibleData = []
+    hyperLinkData=[];
 
 
     showFilterComponent = false;
@@ -41,6 +42,16 @@ export default class PermissionAndAccessHelper extends LightningElement {
 
 
     get dataToRender() {
+    //     let tempData1=[];
+    //     visibleData.forEach((record)=>{
+    //     let tempData = Object.assign({},record)
+    //     tempData.name='/'+tempData.Id;
+    //     tempData1.push(tempData);
+    // });
+    //    this.hyperLinkData=tempdata1;
+    //    console.log(this.hyperLinkData);
+    console.log('inside render');
+    console.log(JSON.stringify(this.visibleData.typeData));
         return this.visibleData;
     }
 
@@ -62,7 +73,8 @@ export default class PermissionAndAccessHelper extends LightningElement {
         try {
             this.isLoading = true;
             this.allData = await getAllPermissionData();
-            console.log(JSON.stringify(this.allData));
+            console.log('yes hre');
+            console.log(JSON.stringify(this.allData[0].permissionSetProfileData[0].name));
         } catch (e) {
             console.log("Error found in connected callback as " + e);
         }
@@ -285,7 +297,6 @@ export default class PermissionAndAccessHelper extends LightningElement {
             });
             permEle.rowspan = permRowSpanValue + 1;
         });
-        console.log(alldata);
         return alldata;
     }
 }

@@ -1,56 +1,57 @@
 <template>
-     <!-- <div if:true={isLoading}>
-   
-        <lightning-spinner class="slds-spinner slds-spinner_medium"></lightning-spinner> 
-     </div> -->
 
-<div style="background:black;">
+    <header class=" slds-is-relative demo-only-element slds-theme_default slds-border_bottom slds-p-around_small"
+        style="z-index:1">
+        <lightning-button-icon class="slds-m-left_xx-small" title="Filters" aria-expanded="true"
+            aria-controls="example-unique-id-26" aria-pressed="true" icon-name="utility:filter_criteria"
+            variant="border-filled" onclick={showFilter}></lightning-button-icon>
+        <lightning-spinner if:true={isLoading} class="slds-spinner slds-spinner_medium"
+            variant="base"></lightning-spinner>
+    </header>
+    <div class="demo-only-element"
+        style="background-color:#fafaf9;position:relative;height:100%;overflow:hidden;display:flex;">
+        <template if:true={showFilterComponent}>
+            <div class="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-left slds-panel_drawer slds-is-open"
+                aria-hidden="false" id="example-unique-id-26">
+                <div class="slds-panel__header">
+                    <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Panel Header">
+                        Filter Based On</h2>
+                    <div class="slds-panel__header-actions">
+                        <lightning-button-icon class="slds-m-left_xx-small" title="Filters" aria-expanded="true"
+                            aria-controls="example-unique-id-26" aria-pressed="true" icon-name="utility:close"
+                            variant="border-filled" onclick={showFilter}></lightning-button-icon>
+                    </div>
+                </div>
 
-<header class=" slds-is-relative demo-only-element slds-theme_default slds-border_bottom slds-p-around_small" style="z-index:1">
-<lightning-button-icon class="slds-m-left_xx-small"  title="Filters" aria-expanded="true" aria-controls="example-unique-id-26" aria-pressed="true" icon-name="utility:filter_criteria" variant="border-filled" onclick={showFilter}></lightning-button-icon>
-
-    <lightning-spinner   if:true={isLoading} class="slds-spinner slds-spinner_medium" variant="base"></lightning-spinner> 
-</header>
-
-<div class="demo-only-element" style="background-color:#fafaf9;position:relative;height:100%;overflow:hidden;display:flex;">
-<template if:true={showFilterComponent}>
-<div class="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-left slds-panel_drawer slds-is-open" aria-hidden="false" id="example-unique-id-26">     
-<div class="slds-panel__header">
-<h2 class="slds-panel__header-title slds-text-heading_small slds-truncate" title="Panel Header">Filter Based On</h2>
-
-</div>
-
-<div class="slds-panel__body" style="height:60vh;">
-<lightning-spinner if:true={isComboboxLoading} size="small"></lightning-spinner>
-<lightning-combobox class="slds-var-m-horizontal_small" name="Filter Type"
-    options={filterOptions} value={selectedFilterType} onchange={handleFilterTypeChange}>
-</lightning-combobox>
-<template if:true={isFilterTypeSelected}>
-    <c-combobox-autocomplete options={optionsForDataFilter} classes="slds-var-m-horizontal_small"
-        label="Select Value To Filter On" placeholder={placeholderForDataFilter}
-        value={selectedDataLabel} onselectoption={handleDataFilterChange}>
-    </c-combobox-autocomplete>
-</template>
-<template if:true={isFilterTypeField}>
-    <c-combobox-autocomplete options={optionsForFieldFilter} classes="slds-var-m-horizontal_small"
-        label="Select a Field To Filter" placeholder='Select a Field' value={selectedFieldLabel}
-        onselectoption={handleFieldChange}>
-    </c-combobox-autocomplete>
-    <template if:false={isObjectSelected}>
-        <div class="slds-var-m-horizontal_small">
-            <p>Please Select an Object First to then select a field</p>
+                <div class="slds-panel__body" style="height:60vh;">
+                    <lightning-spinner if:true={isComboboxLoading} size="small"></lightning-spinner>
+                    <lightning-combobox class="slds-var-m-horizontal_small" name="Filter Type" options={filterOptions}
+                        value={selectedFilterType} onchange={handleFilterTypeChange}>
+                    </lightning-combobox>
+                    <template if:true={isFilterTypeSelected}>
+                        <c-combobox-autocomplete options={optionsForDataFilter} classes="slds-var-m-horizontal_small"
+                            label="Select Value To Filter On" placeholder={placeholderForDataFilter}
+                            value={selectedDataLabel} onselectoption={handleDataFilterChange}>
+                        </c-combobox-autocomplete>
+                    </template>
+                    <template if:true={isFilterTypeField}>
+                        <c-combobox-autocomplete options={optionsForFieldFilter} classes="slds-var-m-horizontal_small"
+                            label="Select a Field To Filter" placeholder='Select a Field' value={selectedFieldLabel}
+                            onselectoption={handleFieldChange}>
+                        </c-combobox-autocomplete>
+                        <template if:false={isObjectSelected}>
+                            <div class="slds-var-m-horizontal_small">
+                                <p>Please Select an Object First to then select a field</p>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </template>
+        <div class="demo-only-content slds-col " style="height:100%;">
+            <c-table-to-render-data class="slds-p-around_medium" if:false={isLoading}
+                render-data={dataToRender}></c-table-to-render-data>
         </div>
-    </template>
-</template>
-</div>
-</div>
-</template>
-<div class="demo-only-content slds-col " style="height:100%;">
-<c-table-to-render-data class="slds-p-around_medium" if:false={isLoading} render-data={dataToRender}></c-table-to-render-data>
-</div>
-</div>
-</div>
-</template>
+    </div>
 
-
-
+</template>

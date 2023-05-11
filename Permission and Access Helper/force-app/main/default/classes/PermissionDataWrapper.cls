@@ -26,6 +26,9 @@ public class PermissionDataWrapper {
         public List<PermissionTypeData> permissionTypeData;
         @AuraEnabled
         public Integer rowspan;
+        @AuraEnabled
+        public String href;
+
     }
 
     public class PermissionTypeData {
@@ -53,6 +56,7 @@ public class PermissionDataWrapper {
         public Integer key;
         @AuraEnabled
         public String access;
+
 
         public Permission(String value, String access, Integer key) {
             this.value = value;

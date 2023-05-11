@@ -7,19 +7,19 @@
             <thead>
                 <tr class="slds-text-title_caps">
                     <th scope="col">
-                    <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20%;" title="Type">Type</div>
+                    <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20%; background:rgb(100, 216, 178)" title="Type">Type</div>
                     </th>
                     <th scope="col">
-                        <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20%" title="Name">Name</div>
+                        <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20%;background:rgb(100, 216, 178)" title="Name">Name</div>
                     </th>
                     <th scope="col">
-                        <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20%" title="Permission Type">Permission Type</div>
+                        <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20%;background:rgb(100, 216, 178)" title="Permission Type">Permission Type</div>
                     </th>
                     <th scope="col">
-                        <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20%" title="Value">Value</div>
+                        <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20%;background:rgb(100, 216, 178)" title="Value">Value</div>
                     </th>
                     <th scope="col">
-                        <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20.6%" title="Access">Access</div>
+                        <div class="slds-truncate slds-cell-fixed slds-media slds-media_center" style="width:20.6%;background:rgb(100, 216, 178)" title="Access">Access</div>
                     </th>
                 </tr>
             
@@ -28,7 +28,7 @@
                 <!-- <div class="slds-scrollable"> -->
                     <template if:true={renderData}>
                         <template for:each={renderData} for:item="typeData">
-                            <tr key={typeData.key} class="slds-hint-parent">
+                            <tr key={typeData.key} class="slds-hint-parent" >
                                 <td rowspan={typeData.rowspan} data-label="typeData.type" title={typeData.type}>
                                     <div class="slds-truncate">{typeData.type}</div>
                                 </td>
@@ -37,7 +37,8 @@
                                 <tr key={profileData.key}>
                                     <td rowspan={profileData.rowspan} data-label="profileData.name"
                                         title={profileData.name}>
-                                        <div class="slds-truncate">{profileData.name}</div>
+                                        
+                                        <a href={profileData.href}  target="_blank" class="wrapHyperLink">{profileData.name}</a>
                                     </td>
                                 </tr>
                                 <template for:each={profileData.permissionTypeData} for:item="permissionTypeData">
@@ -51,7 +52,7 @@
                                     
                                     <template for:each={permissionTypeData.permissions} for:item="permissions">
                                         <tr key={permissions.key}>
-                                            <td data-label="permissions.value" title={permissions.value}>
+                                            <td data-label="permissions.value" title={permissions.value}>                                     
                                                 <div class="slds-truncate">{permissions.value}</div>
                                             </td>
                                             <td data-label="permissions.access" title={permissions.access}>
@@ -69,3 +70,4 @@
     </div>
     </div>
 </template>
+
