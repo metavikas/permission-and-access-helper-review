@@ -152,7 +152,7 @@ public class PermissionServiceImpl implements IPermissionService {
                     pspd.name = profile.Name;
                     pspd.key = keyForPermissionProfile++;
                     pspd.id = profile.Id;
-                    pspd.href='/'+profile.Id;
+                    pspd.href='/lightning/setup/EnhancedProfiles/page?address=%2F'+profile.Id;
                     Integer pspdRowspan = 0;
                     List<PermissionDataWrapper.Permission> permissions = new List<PermissionDataWrapper.Permission>();
                     List<PermissionDataWrapper.PermissionTypeData> ptdList = new List<PermissionDataWrapper.PermissionTypeData>();
@@ -209,7 +209,7 @@ public class PermissionServiceImpl implements IPermissionService {
                     pspd.name = permissionSet.Label;
                     pspd.key = keyForPermissionProfile++;
                     pspd.id = permissionSet.Id;
-                    pspd.href='/'+permissionSet.Id;
+                    pspd.href='/lightning/setup/PermSets/page?address=%2F'+permissionSet.Id;
                     Integer pspdRowspan = 0;
                     List<PermissionDataWrapper.Permission> permissions = new List<PermissionDataWrapper.Permission>();
                     List<PermissionDataWrapper.PermissionTypeData> ptdList = new List<PermissionDataWrapper.PermissionTypeData>();

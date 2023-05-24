@@ -31,7 +31,7 @@ export default class PermissionAndAccessHelper extends LightningElement {
     isObjectSelected = false;
     allData = [];
     visibleData = []
-    hyperLinkData=[];
+    isLoadingAfterClear=false;
 
 
     showFilterComponent = false;
@@ -40,18 +40,15 @@ export default class PermissionAndAccessHelper extends LightningElement {
         this.showFilterComponent = (this.showFilterComponent)? false:true;
     }
 
+    clearFilters(event){
+        this.isLoadingAfterClear=true;
+        this.visibleData=this.allData;
+         this.isLoadingAfterClear=false;
+    }
+ 
+
 
     get dataToRender() {
-    //     let tempData1=[];
-    //     visibleData.forEach((record)=>{
-    //     let tempData = Object.assign({},record)
-    //     tempData.name='/'+tempData.Id;
-    //     tempData1.push(tempData);
-    // });
-    //    this.hyperLinkData=tempdata1;
-    //    console.log(this.hyperLinkData);
-    console.log('inside render');
-    console.log(JSON.stringify(this.visibleData.typeData));
         return this.visibleData;
     }
 
@@ -73,7 +70,6 @@ export default class PermissionAndAccessHelper extends LightningElement {
         try {
             this.isLoading = true;
             this.allData = await getAllPermissionData();
-            console.log('yes hre');
             console.log(JSON.stringify(this.allData[0].permissionSetProfileData[0].name));
         } catch (e) {
             console.log("Error found in connected callback as " + e);
