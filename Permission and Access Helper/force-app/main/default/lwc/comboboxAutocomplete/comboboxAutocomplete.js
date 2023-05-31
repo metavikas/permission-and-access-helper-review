@@ -39,6 +39,7 @@ export default class ComboboxAutocomplete extends LightningElement {
         document.removeEventListener('click', this._handleOutsideClick);
     }
 
+    
     filterOptions(event) {
         const filterText = event.detail.value;
         if (filterText === '') {
